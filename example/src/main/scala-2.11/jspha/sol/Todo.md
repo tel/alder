@@ -1,7 +1,76 @@
 
-# Properties!
+# Todo!
 
 See https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+
+## Types
+
+- [ ] Angle
+  - [X] deg
+  - [X] grad
+  - [X] rad
+  - [X] turn
+- [ ] Color
+  - [ ] hsl()
+  - [ ] hsla()
+  - [X] rgb()
+  - [X] rgba()
+  - [ ] .lighten()
+  - [ ] .darken()
+  - [ ] .tint()    http://bourbon.io/docs/#tint-shade
+  - [ ] .shade()   http://bourbon.io/docs/#tint-shade
+  - [ ] .opacity()
+- [ ] Frequency
+  - [X] hz (becomes unit "Hz", with no space)
+  - [X] khz (becomes unit "kHz", with no space)
+- [ ] Blend Mode
+  - [ ] normal
+  - [ ] multiply
+  - [ ] screen
+  - [ ] overlay
+  - [ ] darken
+  - [ ] lighten
+  - [ ] color-dodge
+  - [ ] color-burn
+  - [ ] hard-light
+  - [ ] soft-light
+  - [ ] difference
+  - [ ] exclusion
+  - [ ] hue
+  - [ ] saturation
+  - [ ] color
+  - [ ] luminosity
+- [ ] Linear-Dimension (superclass of Length and Percentage???)
+- [ ] Length
+  - [X] Math Operators
+  - [X] em
+  - [X] ex
+  - [X] ch
+  - [X] rem
+  - [X] vh
+  - [X] vw
+  - [X] vmin
+  - [X] vmax
+  - [X] px
+  - [X] mm
+  - [X] q
+  - [X] cm
+  - [X] in
+  - [X] pt
+  - [X] pc
+- [ ] Percentage
+  - [ ] n '%'
+- [ ] Ratio
+  - [ ] n '/' m
+- [ ] Resolution
+  - [ ] dpcm
+  - [ ] dpi
+  - [ ] dppx
+- [ ] Interval (or "time")
+  - [ ] s
+  - [ ] ms
+- [ ] URL
+  - [ ] url
 
 ## Major groups/clusters
 

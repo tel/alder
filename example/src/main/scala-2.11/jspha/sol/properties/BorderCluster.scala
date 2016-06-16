@@ -1,6 +1,7 @@
 package jspha.sol.properties
 
-import jspha.sol.{Color, CssValue, Length}
+import jspha.sol.internal.CssValue
+import jspha.sol.types.{Color, Length}
 
 trait BorderCluster[Mod] { this: Mixin[Mod] =>
 

@@ -1,4 +1,6 @@
-package jspha.sol
+package jspha.sol.types
+
+import jspha.sol.internal.CssValue
 
 sealed trait Length {
 
@@ -30,7 +32,7 @@ object Length {
   private case class Pt(l: Double) extends Length
   private case class Pc(l: Double) extends Length
 
-  implicit val isCssValue = new CssValue[Length] {
+  implicit val lengthIsCssValue = new CssValue[Length] {
     def cssRepr(len: Length) = len match {
       case Em(l) => s"${l}em"
       case Ex(l) => s"${l}ex"

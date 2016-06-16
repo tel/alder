@@ -1,4 +1,6 @@
-package jspha.sol
+package jspha.sol.types
+
+import jspha.sol.internal.CssValue
 
 /**
   * - Supports both RGB(A) and HSL(A)

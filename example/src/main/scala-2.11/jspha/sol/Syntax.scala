@@ -1,5 +1,6 @@
 package jspha.sol
 
+import jspha.sol.internal.CssValue
 import jspha.sol.properties._
 
 /**
@@ -10,39 +11,11 @@ trait Syntax[Sty, Mod] {
   // CSS types
   /*
     Types
-      <angle>
-        deg
-        grad
-        rad
-        turn
       <basic-shape>
         circle()
         ellipse()
         inset()
         polygon()
-      <blend-mode>
-        normal
-        multiply
-        screen
-        overlay
-        darken
-        lighten
-        color-dodge
-        color-burn
-        hard-light
-        soft-light
-        difference
-        exclusion
-        hue
-        saturation
-        color
-        luminosity
-      <color>
-        hsl()
-        hsla()
-        rgb()
-        rgba()
-      <custom-ident>
       <filter-function>
         <blur()> = blur( <length> )
         <brightness()> = brightness( [ <number> | <percentage> ] )
@@ -54,9 +27,6 @@ trait Syntax[Sty, Mod] {
         <opacity()> = opacity( [ <number> | <percentage> ] )
         <sepia()> = sepia( [ <number> | <percentage> ] )
         <saturate()> = saturate( [ <number> | <percentage> ] )
-      <frequency>
-        Hz
-        kHz
       <gradient> [subtypes <image>?]
         linear-gradient()
         radial-gradient()
@@ -64,26 +34,6 @@ trait Syntax[Sty, Mod] {
         repeating-radial-gradient()
       <image>
         image() ???
-      <integer>
-      <length>
-        em
-        ex
-        ch
-        rem
-        vh
-        vw
-        vmin
-        vmax
-        px
-        mm
-        q
-        cm
-        in
-        pt
-        pc
-      <number>
-      <percentage>
-        n '%'
       <position>
         syntax...
         [ [ left | center | right | top | bottom | <percentage> | <length> ]
@@ -91,18 +41,8 @@ trait Syntax[Sty, Mod] {
           | [ center | [ left | right ] [ <percentage> | <length> ]? ]
           && [ center | [ top | bottom ] [ <percentage> | <length> ]? ]
         ]
-      <ratio>
-        n '/' m    no spaces
-      <resolution>
-        dpcm
-        dpi
-        dppx
       <shape>
         rect()
-      <string>
-      <time> (interval)
-        s
-        ms
       <timing-function>
         cubic-bezier()
         steps()
@@ -135,10 +75,10 @@ trait Syntax[Sty, Mod] {
         translateX()
         translateY()
         translateZ()
-      <url>
-        url()
-      <user-ident>
    */
+
+  val Length = types.Length
+  val Color = types.Color
 
   def mods(modSeq: Mod*): Mod
 

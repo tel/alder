@@ -1,6 +1,6 @@
 package jspha.sol.properties
 
-import jspha.sol.CssValue
+import jspha.sol.internal.CssValue
 
 trait ModOps[Mod] {
   def assignMod[A: CssValue](key: Property[A], value: A): Mod
