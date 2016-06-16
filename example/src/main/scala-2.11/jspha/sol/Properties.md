@@ -90,6 +90,8 @@
 - [ ] align-items
 - [ ] align-self
 
+- [ ] justify-content
+
 ### font
 - [ ] font
 - [ ] font-family
@@ -135,6 +137,48 @@
 - [ ] list-style-image
 - [ ] list-style-position
 - [ ] list-style-type
+
+### margin
+- [ ] margin
+- [ ] margin-block-end
+- [ ] margin-block-start
+- [ ] margin-bottom
+- [ ] margin-inline-end
+- [ ] margin-inline-start
+- [ ] margin-left
+- [ ] margin-right
+- [ ] margin-top
+
+### padding
+- [ ] padding
+- [ ] padding-block-end
+- [ ] padding-block-start
+- [ ] padding-bottom
+- [ ] padding-inline-end
+- [ ] padding-inline-start
+- [ ] padding-left
+- [ ] padding-right
+- [ ] padding-top
+
+### text
+- [ ] text-align
+- [ ] text-align-last
+- [ ] text-combine-upright
+- [ ] text-decoration
+- [ ] text-decoration-color
+- [ ] text-decoration-line
+- [ ] text-decoration-style
+- [ ] text-emphasis
+- [ ] text-emphasis-color
+- [ ] text-emphasis-position
+- [ ] text-emphasis-style
+- [ ] text-indent
+- [ ] text-orientation
+- [ ] text-overflow
+- [ ] text-rendering
+- [ ] text-shadow
+- [ ] text-transform
+- [ ] text-underline-position
 
 ## Alphabetized others
 
@@ -191,22 +235,11 @@
 - [ ] inline-size
 - [ ] isolation
 
-- [ ] justify-content
-
 - [ ] left
 - [ ] letter-spacing
 - [ ] line-break
 - [ ] line-height
 
-- [ ] margin
-- [ ] margin-block-end
-- [ ] margin-block-start
-- [ ] margin-bottom
-- [ ] margin-inline-end
-- [ ] margin-inline-start
-- [ ] margin-left
-- [ ] margin-right
-- [ ] margin-top
 - [ ] mask
 - [ ] mask-clip
 - [ ] mask-composite
@@ -246,15 +279,6 @@
 - [ ] overflow-x
 - [ ] overflow-y
 
-- [ ] padding
-- [ ] padding-block-end
-- [ ] padding-block-start
-- [ ] padding-bottom
-- [ ] padding-inline-end
-- [ ] padding-inline-start
-- [ ] padding-left
-- [ ] padding-right
-- [ ] padding-top
 - [ ] page-break-after
 - [ ] page-break-before
 - [ ] page-break-inside
@@ -282,24 +306,6 @@
 
 - [ ] tab-size
 - [ ] table-layout
-- [ ] text-align
-- [ ] text-align-last
-- [ ] text-combine-upright
-- [ ] text-decoration
-- [ ] text-decoration-color
-- [ ] text-decoration-line
-- [ ] text-decoration-style
-- [ ] text-emphasis
-- [ ] text-emphasis-color
-- [ ] text-emphasis-position
-- [ ] text-emphasis-style
-- [ ] text-indent
-- [ ] text-orientation
-- [ ] text-overflow
-- [ ] text-rendering
-- [ ] text-shadow
-- [ ] text-transform
-- [ ] text-underline-position
 - [ ] top
 - [ ] touch-action
 - [ ] transform
