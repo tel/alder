@@ -220,6 +220,8 @@ trait Syntax[Sty, Mod] {
   case class Property[A](name: String)
 
   def assignMod[A: CssValue](key: Property[A], value: A): Mod
+  def assignModLiterally[A](key: Property[A], value: String): Mod
+  def mods(modSeq: Mod*): Mod
 
   implicit class KeyAssign[A: CssValue](key: Property[A]) {
     def :=(value: A): Mod = assignMod(key, value)
@@ -337,14 +339,120 @@ trait Syntax[Sty, Mod] {
   def pseudoClass(cls: PseudoClass)(mods: Mod*): Mod
   def pseudoElement(cls: PseudoElement)(mods: Mod*): Mod
   // attribute(attrExpr: AttrExpr)(mods: Mod*): Mod
-  // descendent
+  // decedent
   // child
   // sibling
 
+  private trait StandardGlobalValues extends Property[_] {
+    val inherit: Mod = assignModLiterally(this, "inherit")
+    val initial: Mod = assignModLiterally(this, "initial")
+    val unset: Mod = assignModLiterally(this, "unset")
+  }
+
+  private trait AutoValues extends Property[_] {
+    val auto: Mod = assignModLiterally(this, "auto")
+  }
+
   object Properties {
-//    object background extends Property[Int]("background") {
-//      object color extends Property[Color]("background-color")
-//    }
+
+    /**
+      * The flex CSS property is a shorthand property specifying the ability of a flex item to alter its dimensions to fill available space. Flex items can be stretched to use available space proportional to their flex grow factor or their flex shrink factor to prevent overflow.
+      * https://developer.mozilla.org/en-US/docs/Web/CSS/flex
+      */
+    object flex {
+
+      // TODO: shorthand
+      // TODO: flex-flow shorthand (https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow)
+
+      /**
+        * The flex-basis CSS property specifies the flex basis which is the initial main size of a flex item. This property determines the size of the content-box unless specified otherwise using box-sizing.
+        * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis
+        */
+      object basis
+        extends Property[Int]("flex-basis")
+          with AutoValues
+          with StandardGlobalValues {
+
+        val fill = assignModLiterally(this, "fill")
+        val content = assignModLiterally(this, "content")
+        val maxContent = assignModLiterally(this, "max-content")
+        val minContent = assignModLiterally(this, "min-content")
+        val fitContent = assignModLiterally(this, "fit-content")
+
+      }
+
+      /**
+        * The flex-direction CSS property specifies how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
+        * Note that the value row and row-reverse are affected by the directionality of the flex container. If its dir attribute is ltr, row represents the horizontal axis oriented from the left to the right, and row-reverse from the right to the left; if the dir attribute is rtl, row represents the axis oriented from the right to the left, and row-reverse from the left to the right.
+        * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction
+        */
+      object direction
+        extends Property[Nothing]("flex-direction")
+          with StandardGlobalValues {
+
+        /**
+          * The flex container's main-axis is defined to be the same as the text direction. The main-start and main-end points are the same as the content direction.
+          */
+        val row = assignModLiterally(this, "row")
+
+        /**
+          * Behaves the same as row but the main-start and main-end points are permuted.
+          */
+        val rowReverse = assignModLiterally(this, "row-reverse")
+
+        /**
+          * The flex container's main-axis is the same as the block-axis. The main-start and main-end points are the same as the before and after points of the writing-mode.
+          */
+        val column = assignModLiterally(this, "column")
+
+        /**
+          * Behaves the same as column but the main-start and main-end are permuted.
+          */
+        val columnReverse = assignModLiterally(this, "column-reverse")
+
+      }
+
+      /**
+        * The CSS flex-wrap property specifies whether flex items are forced into a single line or can be wrapped onto multiple lines. If wrapping is allowed, this property also enables you to control the direction in which lines are stacked.
+        * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap
+        */
+      object wrap
+        extends Property[Nothing]("flex-wrap")
+          with StandardGlobalValues {
+
+        /**
+          * The flex items are laid out in a single line which may cause the flex container to overflow. The cross-start is either equivalent to start or before depending flex-direction value.
+          */
+        val nowrap = assignModLiterally(this, "nowrap")
+
+        /**
+          * The flex items break into multiple lines. The cross-start is either equivalent to start or before depending flex-direction value and the cross-end is the opposite of the specified cross-start.
+          */
+        val wrap = assignModLiterally(this, "wrap")
+
+        /**
+          * Behaves the same as wrap but cross-start and cross-end are permuted.
+          */
+        val wrapReverse = assignModLiterally(this, "wrap-reverse")
+      }
+
+      /**
+        * The flex-grow CSS property specifies the flex grow factor of a flex item. It specifies what amount of space inside the flex container the item should take up.
+        * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow
+        */
+      object grow
+        extends Property[Double]("flex-grow")
+          with StandardGlobalValues
+
+      /**
+        * The flex-shrink CSS property specifies the flex shrink factor of a flex item.
+        * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink
+        */
+      object shrink
+        extends Property[Double]("flex-shrink")
+          with StandardGlobalValues
+
+    }
   }
 
 
@@ -377,319 +485,6 @@ trait Syntax[Sty, Mod] {
 /*
 
 Properties
-
-  align-content
-  align-items
-  align-self
-  all
-  animation
-  animation-delay
-  animation-direction
-  animation-duration
-  animation-fill-mode
-  animation-iteration-count
-  animation-name
-  animation-play-state
-  animation-timing-function
-
-  backface-visibility
-  background
-  background-attachment
-  background-blend-mode
-  background-clip
-  background-color
-  background-image
-  background-origin
-  background-position
-  background-repeat
-  background-size
-  block-size
-  border
-  border-block-end
-  border-block-end-color
-  border-block-end-style
-  border-block-end-width
-  border-block-start
-  border-block-start-color
-  border-block-start-style
-  border-block-start-width
-  border-bottom
-  border-bottom-color
-  border-bottom-left-radius
-  border-bottom-right-radius
-  border-bottom-style
-  border-bottom-width
-  border-collapse
-  border-color
-  border-image
-  border-image-outset
-  border-image-repeat
-  border-image-slice
-  border-image-source
-  border-image-width
-  border-inline-end
-  border-inline-end-color
-  border-inline-end-style
-  border-inline-end-width
-  border-inline-start
-  border-inline-start-color
-  border-inline-start-style
-  border-inline-start-width
-  border-left
-  border-left-color
-  border-left-style
-  border-left-width
-  border-radius
-  border-right
-  border-right-color
-  border-right-style
-  border-right-width
-  border-spacing
-  border-style
-  border-top
-  border-top-color
-  border-top-left-radius
-  border-top-right-radius
-  border-top-style
-  border-top-width
-  border-width
-  bottom
-  box-decoration-break
-  box-shadow
-  box-sizing
-  break-after
-  break-before
-  break-inside
-
-  caption-side
-  clear
-  clip
-  clip-path
-  color
-  column-count
-  column-fill
-  column-gap
-  column-rule
-  column-rule-color
-  column-rule-style
-  column-rule-width
-  column-span
-  column-width
-  columns
-  content
-  counter-increment
-  counter-reset
-  cursor
-
-  direction
-  display
-
-  empty-cells
-
-  filter
-  flex
-  flex-basis
-  flex-direction
-  flex-flow
-  flex-grow
-  flex-shrink
-  flex-wrap
-  float
-  font
-  font-family
-  font-feature-settings
-  font-kerning
-  font-language-override
-  font-size
-  font-size-adjust
-  font-stretch
-  font-style
-  font-synthesis
-  font-variant
-  font-variant-alternates
-  font-variant-caps
-  font-variant-east-asian
-  font-variant-ligatures
-  font-variant-numeric
-  font-variant-position
-  font-weight
-
-  grid
-  grid-area
-  grid-auto-columns
-  grid-auto-flow
-  grid-auto-rows
-  grid-column
-  grid-column-end
-  grid-column-gap
-  grid-column-start
-  grid-gap
-  grid-row
-  grid-row-end
-  grid-row-gap
-  grid-row-start
-  grid-template
-  grid-template-areas
-  grid-template-columns
-  grid-template-rows
-
-  height
-  hyphens
-  hz
-
-  image-orientation
-  image-rendering
-  image-resolution
-  ime-mode
-  in
-  inherit
-  initial
-  inline-size
-  isolation
-
-  justify-content
-
-  khz
-
-  left
-  letter-spacing
-  line-break
-  line-height
-  list-style
-  list-style-image
-  list-style-position
-  list-style-type
-
-  margin
-  margin-block-end
-  margin-block-start
-  margin-bottom
-  margin-inline-end
-  margin-inline-start
-  margin-left
-  margin-right
-  margin-top
-  mask
-  mask-clip
-  mask-composite
-  mask-image
-  mask-mode
-  mask-origin
-  mask-position
-  mask-repeat
-  mask-size
-  mask-type
-  max-block-size
-  max-height
-  max-inline-size
-  max-width
-  min-block-size
-  min-height
-  min-inline-size
-  min-width
-  mix-blend-mode
-
-  object-fit
-  object-position
-  offset-block-end
-  offset-block-start
-  offset-inline-end
-  offset-inline-start
-  opacity
-  order
-  orphans
-  outline
-  outline-color
-  outline-offset
-  outline-style
-  outline-width
-  overflow
-  overflow-wrap
-  overflow-x
-  overflow-y
-
-  padding
-  padding-block-end
-  padding-block-start
-  padding-bottom
-  padding-inline-end
-  padding-inline-start
-  padding-left
-  padding-right
-  padding-top
-  page-break-after
-  page-break-before
-  page-break-inside
-  perspective
-  perspective-origin
-  pointer-events
-  position
-
-  quotes
-
-  resize
-  revert
-  right
-  ruby-align
-  ruby-merge
-  ruby-position
-
-  scroll-behavior
-  scroll-snap-coordinate
-  scroll-snap-destination
-  scroll-snap-type
-  shape-image-threshold
-  shape-margin
-  shape-outside
-
-  tab-size
-  table-layout
-  text-align
-  text-align-last
-  text-combine-upright
-  text-decoration
-  text-decoration-color
-  text-decoration-line
-  text-decoration-style
-  text-emphasis
-  text-emphasis-color
-  text-emphasis-position
-  text-emphasis-style
-  text-indent
-  text-orientation
-  text-overflow
-  text-rendering
-  text-shadow
-  text-transform
-  text-underline-position
-  top
-  touch-action
-  transform
-  transform-box
-  transform-origin
-  transform-style
-  transition
-  transition-delay
-  transition-duration
-  transition-property
-  transition-timing-function
-
-  unicode-bidi
-  unset
-
-  vertical-align
-  visibility
-
-  white-space
-  widows
-  width
-  will-change
-  word-break
-  word-spacing
-  word-wrap
-  writing-mode
-
-  z-index
 
  */
 

@@ -11,10 +11,11 @@ package jspha.sol
   * (potentially fallback) values can be generated.
   */
 trait CssValue[A] {
-  def cssRepr(a: A): String
+  def cssRepr(self: A): String
 }
 
 object CssValue {
+
 
   def apply[A](a: A)(implicit ev: CssValue[A]): String =
     ev.cssRepr(a)
@@ -23,6 +24,12 @@ object CssValue {
     def cssRepr(a: A) = a.toString
   }
 
-  implicit val intIsCssValue =
-    fromToString[Int]
+  implicit val intIsCssValue = fromToString[Int]
+  implicit val doubleIsCssValue = fromToString[Double]
+
+  case class Literal(lit: String)
+
+  implicit val literalIsCssValue = new CssValue[Literal] {
+    def cssRepr(self: Literal) = self.lit
+  }
 }
