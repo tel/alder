@@ -1,10 +1,9 @@
 package jspha.alder.example.cs
 
-import jspha.alder.Factor
-import jspha.alder.raw.Element
+import jspha.alder.{Facet, Element}
 import jspha.alder.vdom.Dsl
 
-object CounterWithControls extends Factor {
+object CounterWithControls extends Facet {
 
   type Model = Counter.Model
 
@@ -17,7 +16,7 @@ object CounterWithControls extends Factor {
     case Delete => model
   }
 
-  protected def view(model: Model, submit: Action => Unit): Element = {
+  def view(model: Model, submit: Action => Unit): Element = {
 
     import Dsl._
     import Html._

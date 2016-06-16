@@ -47,11 +47,13 @@ lazy val example = project
   .settings(commonSettings: _*)
   .settings(
     workbenchSettings,
-    bootSnippet := "jspha.alder.example.AlderExample().main();",
+    bootSnippet :=
+      "window.app = jspha.alder.example.AlderExample();window.app.main();",
     updateBrowsers <<= updateBrowsers.triggeredBy(fastOptJS in Compile)
   )
   .settings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.0"
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.0",
+    libraryDependencies += "com.github.japgolly.scalacss" %%% "core" % "0.4.1"
   )
   .settings(
     jsDependencies ++= Seq(

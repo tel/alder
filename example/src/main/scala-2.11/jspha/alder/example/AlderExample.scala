@@ -1,6 +1,6 @@
 package jspha.alder.example
 
-import jspha.alder.raw.{Element, ReactDOM}
+import jspha.alder.{Facet, Renderer}
 import org.scalajs.dom
 
 import scala.scalajs.js.JSApp
@@ -9,26 +9,21 @@ import scala.scalajs.js.annotation.JSExport
 @JSExport
 object AlderExample extends JSApp {
 
-  val TheFactor = cs.CounterSet
+  val App =
+    Facet.Initialized(cs.CounterSet)(cs.CounterSet.init())
 
-  var state = TheFactor.init()
-
-  def submit(act: TheFactor.Action): Unit = {
-    println(act)
-    state = TheFactor.step(act, state)
-    render()
-  }
-
-  def render() = {
-    val el: Element = TheFactor(state, submit)
-    ReactDOM.render(el, target)
-  }
-
-  val target = dom.document.querySelector("#app")
+  val renderer =
+    new Renderer(App, dom.document.getElementById("app")) {
+      override def onAction(action: Action, newState: Model) =
+        println("---> " + action)
+    }
 
   @JSExport
-  def main(): Unit = {
-    render()
-  }
+  def main() =
+    renderer.start()
+
+  @JSExport
+  def printState(): Unit =
+    println(renderer.getState)
 
 }

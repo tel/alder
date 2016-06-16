@@ -1,12 +1,11 @@
 package jspha.alder.example.cs
 
-import jspha.alder.Factor
-import jspha.alder.raw.Element
+import jspha.alder.{Facet, Element}
 import jspha.alder.vdom.Dsl
 
 import scala.util.Random
 
-object CounterSet extends Factor {
+object CounterSet extends Facet {
   val Sub = CounterWithControls
 
   case class Model(memory: Map[String, Sub.Model], order: Seq[String])
@@ -41,7 +40,7 @@ object CounterSet extends Factor {
     }
   }
 
-  protected def view(model: Model, submit: (Action) => Unit): Element = {
+  def view(model: Model, submit: (Action) => Unit): Element = {
 
     import Dsl._
     import Html._

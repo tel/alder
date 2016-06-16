@@ -13,7 +13,13 @@ import scala.scalajs.js
   *
   * Apps are an implementation of the "Elm Architecture".
   */
-abstract class Factor {
+abstract class Facet {
+
+  /**
+    * Provided as a value when extending the Facet class so that you can
+    * easily `import Dsl._` without having to find the proper import.
+    */
+  val Dsl = vdom.Dsl
 
   /**
     * The displayName string is used in debugging messages and the React
@@ -55,7 +61,7 @@ abstract class Factor {
     * The view method is protected since you almost always want to go through
     * `apply` instead. If you really want to use the view there is `_unsafeView`
     */
-  protected def view(model: Model, submit: Action => Unit): Element
+  def view(model: Model, submit: Action => Unit): Element
 
   /**
     * Direct access to the view function. Rarely useful.
@@ -110,4 +116,30 @@ abstract class Factor {
 
   private lazy val thisComponent: ComponentClass[AppProps, Unit] =
     React.createClass(thisSpec)
+}
+
+object Facet {
+  type Aux[M, A] = Facet {
+    type Model = M
+    type Action = A
+  }
+
+  trait Initialized extends Facet {
+    def init: Model
+  }
+
+  object Initialized {
+    def apply(facet: Facet)(initialState: facet.Model): Initialized = {
+      new Initialized {
+        type Model = facet.Model
+        type Action = facet.Action
+
+        def init = initialState
+        def view(model: Model, submit: Action => Unit) =
+          facet.view(model, submit)
+        def step(action: Action, model: Model) =
+          facet.step(action, model)
+      }
+    }
+  }
 }
