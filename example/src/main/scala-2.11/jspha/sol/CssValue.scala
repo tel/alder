@@ -32,4 +32,11 @@ object CssValue {
   implicit val literalIsCssValue = new CssValue[Literal] {
     def cssRepr(self: Literal) = self.lit
   }
+
+  case class CssList[A](seq: Seq[A])
+
+  implicit def sequenceIsCssValue[A: CssValue] = new CssValue[CssList[A]] {
+    def cssRepr(self: CssList[A]) =
+      self.seq.map(CssValue(_)).mkString(" ")
+  }
 }

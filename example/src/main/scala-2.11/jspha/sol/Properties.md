@@ -1,7 +1,9 @@
 
 # Properties!
 
-## Major groups
+See https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+
+## Major groups/clusters
 
 ### animation
 - [ ] animation
@@ -28,6 +30,7 @@
 
 ### border
 - [ ] border
+
 - [ ] border-block-end
 - [ ] border-block-end-color
 - [ ] border-block-end-style
@@ -36,20 +39,14 @@
 - [ ] border-block-start-color
 - [ ] border-block-start-style
 - [ ] border-block-start-width
-- [ ] border-bottom
-- [ ] border-bottom-color
-- [ ] border-bottom-left-radius
-- [ ] border-bottom-right-radius
-- [ ] border-bottom-style
-- [ ] border-bottom-width
-- [ ] border-collapse
-- [ ] border-color
+
 - [ ] border-image
 - [ ] border-image-outset
 - [ ] border-image-repeat
 - [ ] border-image-slice
 - [ ] border-image-source
 - [ ] border-image-width
+
 - [ ] border-inline-end
 - [ ] border-inline-end-color
 - [ ] border-inline-end-style
@@ -58,24 +55,35 @@
 - [ ] border-inline-start-color
 - [ ] border-inline-start-style
 - [ ] border-inline-start-width
-- [ ] border-left
-- [ ] border-left-color
-- [ ] border-left-style
-- [ ] border-left-width
+
 - [ ] border-radius
+
+- [X] border-color
+- [X] border-style
+- [X] border-width
+- [X] border-collapse
+- [X] border-spacing
+
+- [ ] border-left
+- [X] border-left-color
+- [X] border-left-style
+- [X] border-left-width
 - [ ] border-right
-- [ ] border-right-color
-- [ ] border-right-style
-- [ ] border-right-width
-- [ ] border-spacing
-- [ ] border-style
+- [X] border-right-color
+- [X] border-right-style
+- [X] border-right-width
 - [ ] border-top
-- [ ] border-top-color
-- [ ] border-top-left-radius
-- [ ] border-top-right-radius
-- [ ] border-top-style
-- [ ] border-top-width
-- [ ] border-width
+- [X] border-top-color
+- [X] border-top-left-radius
+- [X] border-top-right-radius
+- [X] border-top-style
+- [X] border-top-width
+- [ ] border-bottom
+- [X] border-bottom-color
+- [X] border-bottom-left-radius
+- [X] border-bottom-right-radius
+- [X] border-bottom-style
+- [X] border-bottom-width
 
 ### flex (partial)
 - [ ] flex
@@ -86,11 +94,11 @@
 - [X] flex-shrink
 - [X] flex-wrap
 
-- [ ] align-content
-- [ ] align-items
-- [ ] align-self
+- [X] align-content
+- [X] align-items
+- [X] align-self
 
-- [ ] justify-content
+- [X] justify-content
 
 ### font
 - [ ] font
