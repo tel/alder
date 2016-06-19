@@ -14,6 +14,8 @@ trait Border { this: CommonProperties =>
     extends MixinTraits.BorderCore
       with MixinTraits.BorderCommon {
 
+    def apply(builders: (this.type => Mod)*): Mod = builders.map(_(this))
+
     protected val prefix = "border"
 
     /**
@@ -23,7 +25,7 @@ trait Border { this: CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse
       */
     object collapse
-      extends Property[Nothing]("border-collapse")
+      extends Property("border-collapse")
         with InheritGlobalValue {
 
       /**
@@ -44,7 +46,7 @@ trait Border { this: CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing
       */
     object spacing
-      extends Property[Length]("border-spacing")
+      extends Property("border-spacing")
         with InheritGlobalValue
         with MixinTraits.BorderLengthOrEllipsoid
 
@@ -57,6 +59,7 @@ trait Border { this: CommonProperties =>
         with MixinTraits.BorderCommon
         with MixinTraits.BorderTopBottomCommon {
       protected val prefix = "border-top"
+      def apply(builders: (this.type => Mod)*): Mod = builders.map(_(this))
     }
 
     /**
@@ -68,6 +71,7 @@ trait Border { this: CommonProperties =>
         with MixinTraits.BorderCommon
         with MixinTraits.BorderTopBottomCommon {
       protected val prefix = "border-bottom"
+      def apply(builders: (this.type => Mod)*): Mod = builders.map(_(this))
     }
 
     /**
@@ -78,6 +82,7 @@ trait Border { this: CommonProperties =>
       extends MixinTraits.BorderCore
         with MixinTraits.BorderCommon {
       protected val prefix = "border-left"
+      def apply(builders: (this.type => Mod)*): Mod = builders.map(_(this))
     }
 
     /**
@@ -88,6 +93,7 @@ trait Border { this: CommonProperties =>
       extends MixinTraits.BorderCore
         with MixinTraits.BorderCommon {
       protected val prefix = "border-right"
+      def apply(builders: (this.type => Mod)*): Mod = builders.map(_(this))
     }
 
   }
@@ -104,8 +110,10 @@ trait Border { this: CommonProperties =>
         * https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color
         */
       object color
-        extends Property[Color](prefix + "-color")
-          with InheritGlobalValue
+        extends Property(prefix + "-color")
+          with InheritGlobalValue {
+        def apply(col: Color) = this := col
+      }
 
 
       /**
@@ -113,7 +121,7 @@ trait Border { this: CommonProperties =>
         * https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style
         */
       object style
-        extends Property[Nothing]("border-top-style")
+        extends Property("border-top-style")
           with InheritGlobalValue {
 
         /**
@@ -174,15 +182,18 @@ trait Border { this: CommonProperties =>
         * https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width
         */
       object width
-        extends Property[Length]("border-top-width")
+        extends Property("border-top-width")
           with InheritGlobalValue {
+
+        def apply(len: Length) = this := len
+
         val thin = this ::= "thin"
         val medium = this ::= "medium"
         val thick = this ::= "thick"
       }
     }
 
-    trait BorderLengthOrEllipsoid { this : Property[_] =>
+    trait BorderLengthOrEllipsoid { this : Property =>
       def apply(radius: Length): Mod =
         this ::= CssValue.of(radius)
 
@@ -197,7 +208,7 @@ trait Border { this: CommonProperties =>
         * https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius
         */
       object leftRadius
-        extends Property[Length]("border-top-left-radius")
+        extends Property("border-top-left-radius")
           with InheritGlobalValue
           with BorderLengthOrEllipsoid
 
@@ -207,7 +218,7 @@ trait Border { this: CommonProperties =>
         * https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius
         */
       object rightRadius
-        extends Property[Length]("border-top-right-radius")
+        extends Property("border-top-right-radius")
           with InheritGlobalValue
           with BorderLengthOrEllipsoid
     }

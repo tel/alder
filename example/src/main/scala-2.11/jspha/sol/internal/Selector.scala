@@ -195,6 +195,9 @@ object Selector {
   case class Descendant[A](left: Selector[A], right: Selector[A]) extends Selector[A] {
     def gen(a: A) = s"${left.gen(a)} ${right.gen(a)}"
   }
+  case class Or[A](left: Selector[A], right: Selector[A]) extends Selector[A] {
+    def gen(a: A) = s"${left.gen(a)},${right.gen(a)}"
+  }
 
   case class Not[A](selector: Selector[A]) extends Selector[A] {
     def gen(a: A) = selector match {
@@ -240,6 +243,7 @@ object Selector {
     def + (other: Selector[A]) = Adjacent(self, other)
     def ~ (other: Selector[A]) = Sibling(self, other)
     def > (other: Selector[A]) = Child(self, other)
+    def | (other: Selector[A]) = Or(self, other)
     def >> (other: Selector[A]) = Descendant(self, other)
   }
 

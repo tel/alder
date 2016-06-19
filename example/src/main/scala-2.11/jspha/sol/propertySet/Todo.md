@@ -27,7 +27,7 @@
 - [ ] background-size
 
 ### border
-- [ ] border
+- [X] border
 
 - [ ] border-block-end
 - [ ] border-block-end-color
@@ -62,21 +62,21 @@
 - [X] border-collapse
 - [X] border-spacing
 
-- [ ] border-left
+- [X] border-left
 - [X] border-left-color
 - [X] border-left-style
 - [X] border-left-width
-- [ ] border-right
+- [X] border-right
 - [X] border-right-color
 - [X] border-right-style
 - [X] border-right-width
-- [ ] border-top
+- [X] border-top
 - [X] border-top-color
 - [X] border-top-left-radius
 - [X] border-top-right-radius
 - [X] border-top-style
 - [X] border-top-width
-- [ ] border-bottom
+- [X] border-bottom
 - [X] border-bottom-color
 - [X] border-bottom-left-radius
 - [X] border-bottom-right-radius
@@ -84,11 +84,9 @@
 - [X] border-bottom-width
 
 ### flex (partial)
-- [X] flex (manually)
 - [ ] flex
 - [X] flex-basis
 - [X] flex-direction
-- [X] flex-flow (manually)
 - [ ] flex-flow
 - [X] flex-grow
 - [X] flex-shrink
@@ -142,10 +140,10 @@
 - [ ] grid-template-rows
 
 ### list-style
-- [ ] list-style
-- [ ] list-style-image
-- [ ] list-style-position
-- [ ] list-style-type
+- [X] list-style
+- [X] list-style-image
+- [X] list-style-position
+- [X] list-style-type
 
 ### margin
 - [ ] margin

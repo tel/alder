@@ -10,13 +10,16 @@ object Mod {
   case class Sequence(mods: Seq[Mod]) extends Mod
   case class Include(name: Name) extends Mod
   case class Selected(selector: Selector.Local, mods: Seq[Mod]) extends Mod
-  case class ConstrainMedia(media: MediaQuery, mods: Seq[Mod]) extends Mod
+  case class MediaConstrained(mqs: Seq[MediaConstraint], mods: Seq[Mod]) extends Mod
 
   def assign(key: String, value: String): Mod =
     PropertyAssign(key, value)
 
   def selected(selector: Selector.Local, mods: Seq[Mod]): Mod =
     Selected(selector, mods)
+
+  def mediaConstrained(mqs: Seq[MediaConstraint], mods: Seq[Mod]): Mod =
+    MediaConstrained(mqs, mods)
 
   implicit def sequence(mods: Seq[Mod]): Mod =
     Sequence(mods)

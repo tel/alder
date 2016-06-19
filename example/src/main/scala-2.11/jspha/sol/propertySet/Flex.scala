@@ -9,21 +9,17 @@ trait Flex { this : CommonProperties =>
     * https://developer.mozilla.org/en-US/docs/Web/CSS/flex
     */
   object flex
-    extends Property[Nothing]("flex")
+    extends Property("flex")
       with NoneValues
       with AutoValues
       with AllGlobalValues {
-
-    object flow
-      extends Property[Nothing]("flex-flow")
-        with AllGlobalValues
 
     /**
       * The flex-basis CSS property specifies the flex basis which is the initial main size of a flex item. This property determines the size of the content-box unless specified otherwise using box-sizing.
       * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis
       */
     object basis
-      extends Property[Int]("flex-basis")
+      extends Property("flex-basis")
         with AutoValues
         with AllGlobalValues {
 
@@ -36,12 +32,20 @@ trait Flex { this : CommonProperties =>
     }
 
     /**
+      * The flex-flow CSS property is a shorthand property for flex-direction and flex-wrap individual properties.
+      * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow
+      */
+    object flow
+      extends Property("flex-flow")
+        with AllGlobalValues
+
+    /**
       * The flex-direction CSS property specifies how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
       * Note that the value row and row-reverse are affected by the directionality of the flex container. If its dir attribute is ltr, row represents the horizontal axis oriented from the left to the right, and row-reverse from the right to the left; if the dir attribute is rtl, row represents the axis oriented from the right to the left, and row-reverse from the left to the right.
       * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction
       */
     object direction
-      extends Property[Nothing]("flex-direction")
+      extends Property("flex-direction")
         with AllGlobalValues {
 
       /**
@@ -71,7 +75,7 @@ trait Flex { this : CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap
       */
     object wrap
-      extends Property[Nothing]("flex-wrap")
+      extends Property("flex-wrap")
         with AllGlobalValues {
 
       /**
@@ -95,16 +99,24 @@ trait Flex { this : CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow
       */
     object grow
-      extends Property[Double]("flex-grow")
-        with AllGlobalValues
+      extends Property("flex-grow")
+        with AllGlobalValues {
+
+      def apply(ratio: Double) = this := ratio
+
+    }
 
     /**
       * The flex-shrink CSS property specifies the flex shrink factor of a flex item.
       * https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink
       */
     object shrink
-      extends Property[Double]("flex-shrink")
-        with AllGlobalValues
+      extends Property("flex-shrink")
+        with AllGlobalValues {
+
+      def apply(ratio: Double) = this := ratio
+
+    }
 
   }
 
@@ -116,7 +128,7 @@ trait Flex { this : CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/align-content
       */
     object content
-      extends Property[Nothing]("align-content")
+      extends Property("align-content")
         with AllGlobalValues {
 
       /**
@@ -155,7 +167,7 @@ trait Flex { this : CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
       */
     object items
-      extends Property[Nothing]("align-items")
+      extends Property("align-items")
         with AllGlobalValues {
 
       /**
@@ -189,7 +201,7 @@ trait Flex { this : CommonProperties =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
       */
     object self
-      extends Property[Nothing]("align-self")
+      extends Property("align-self")
         with AutoValues
         with AllGlobalValues {
 
@@ -226,7 +238,7 @@ trait Flex { this : CommonProperties =>
     * https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
     */
   object justifyContent
-    extends Property[Nothing]("justify-content")
+    extends Property("justify-content")
       with AllGlobalValues {
 
     /**

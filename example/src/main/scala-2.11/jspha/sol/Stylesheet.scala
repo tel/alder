@@ -45,9 +45,22 @@ class Stylesheet private(val mode: Stylesheet.Mode,
   protected def selected(buildSelector: Selector.Local => Selector.Local)(mods: Mod*): Mod =
     Mod.selected(buildSelector(Selector.&), mods)
 
+  /**
+    * Defines some properties which only hold when certain media
+    * constraints do.
+    */
+  protected def withMedia(constraints: MediaConstraint*)(mods: Mod*): Mod =
+    Mod.mediaConstrained(constraints, mods)
+
+  /**
+    * Defines some properties against a pseudo-class
+    */
   protected def pseudoClass(pc: Selectors.PseudoClass)(mods: Mod*): Mod =
     selected(_ >> pc)(mods)
 
+  /**
+    * Defines some properties against a pseudo-element
+    */
   protected def pseudoElement(pe: Selectors.PseudoElement)(mods: Mod*): Mod =
     selected(_ >> pe)(mods)
 
@@ -108,6 +121,7 @@ class Stylesheet private(val mode: Stylesheet.Mode,
     extends propertySet.CommonProperties
       with propertySet.Flex
       with propertySet.Border
+      with propertySet.ListStyle
 
   val Selectors = Selector
   val PseudoClass = Selector.PseudoClass
@@ -124,10 +138,12 @@ class Stylesheet private(val mode: Stylesheet.Mode,
 
   // Types
 
-  val Length = types.Length
-  val Color = types.Color
   val Angle = types.Angle
-
+  val Color = types.Color
+  val Length = types.Length
+  val Ratio = types.Ratio
+  val Resolution = types.Resolution
+  val Url = types.Url
 
   // Private definitions
 
