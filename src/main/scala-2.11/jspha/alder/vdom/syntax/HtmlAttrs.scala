@@ -12,7 +12,7 @@ class HtmlAttrs[El, Mod](syntax: Internal[El, Mod]) {
   def ariaAttr(name: String)(value: String): Mod =
     makeJsValueMod("data-" + name)(value)
 
-  def `class`(value: String): Mod = makeJsValueMod("class")(value)
+  def `class`(value: String): Mod = syntax.className(value)
   def `for`(value: String): Mod = makeJsValueMod("for")(value)
   def `type`(value: String): Mod = makeJsValueMod("type")(value)
   def about(value: String): Mod = makeJsValueMod("about")(value)

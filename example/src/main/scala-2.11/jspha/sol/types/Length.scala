@@ -2,35 +2,25 @@ package jspha.sol.types
 
 import jspha.sol.internal.CssValue
 
-sealed trait Length {
-
-  val l: Double
-  def apply(l: Double): this.type
-
-  def + (other: this.type): this.type = apply(l + other.l)
-  def - (other: this.type): this.type = apply(l - other.l)
-  def * (other: Double): this.type = apply(l * other)
-  def / (other: Double): this.type = apply(l / other)
-
-}
+sealed trait Length
 
 object Length {
 
-  private case class Em(l: Double) extends Length
-  private case class Ex(l: Double) extends Length
-  private case class Ch(l: Double) extends Length
-  private case class Rem(l: Double) extends Length
-  private case class Vh(l: Double) extends Length
-  private case class Vw(l: Double) extends Length
-  private case class Vmin(l: Double) extends Length
-  private case class Vmax(l: Double) extends Length
-  private case class Px(l: Double) extends Length
-  private case class Mm(l: Double) extends Length
-  private case class Q(l: Double) extends Length
-  private case class Cm(l: Double) extends Length
-  private case class In(l: Double) extends Length
-  private case class Pt(l: Double) extends Length
-  private case class Pc(l: Double) extends Length
+  case class Em(l: Double) extends Length
+  case class Ex(l: Double) extends Length
+  case class Ch(l: Double) extends Length
+  case class Rem(l: Double) extends Length
+  case class Vh(l: Double) extends Length
+  case class Vw(l: Double) extends Length
+  case class Vmin(l: Double) extends Length
+  case class Vmax(l: Double) extends Length
+  case class Px(l: Double) extends Length
+  case class Mm(l: Double) extends Length
+  case class Q(l: Double) extends Length
+  case class Cm(l: Double) extends Length
+  case class In(l: Double) extends Length
+  case class Pt(l: Double) extends Length
+  case class Pc(l: Double) extends Length
 
   implicit val lengthIsCssValue = new CssValue[Length] {
     def cssRepr(len: Length) = len match {

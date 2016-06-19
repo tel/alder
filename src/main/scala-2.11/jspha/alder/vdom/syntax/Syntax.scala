@@ -14,6 +14,8 @@ class Syntax[El, Mod](core: Internal[El, Mod]) extends Core[El, Mod] {
 
   def key(keyName: String): Mod = core.key(keyName)
 
+  def className(name: String) = core.className(name)
+
   implicit def child(el: El): Mod = core.child(el)
 
   implicit def children(els: Seq[El]): Mod = core.children(els)

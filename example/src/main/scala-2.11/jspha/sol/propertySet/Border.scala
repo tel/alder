@@ -1,9 +1,9 @@
-package jspha.sol.properties
+package jspha.sol.propertySet
 
-import jspha.sol.internal.CssValue
+import jspha.sol.internal.{CssValue, Mod, Property}
 import jspha.sol.types.{Color, Length}
 
-trait BorderCluster[Mod] { this: Mixin[Mod] =>
+trait Border { this: CommonProperties =>
 
   /**
     * The border CSS property is a shorthand property for setting the individual border property values in a single place in the style sheet. border can be used to set the values for one or more of: border-width, border-style, border-color.
@@ -11,8 +11,8 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
     * https://developer.mozilla.org/en-US/docs/Web/CSS/border
     */
   object border
-    extends P.BorderCore
-      with P.BorderCommon {
+    extends MixinTraits.BorderCore
+      with MixinTraits.BorderCommon {
 
     protected val prefix = "border"
 
@@ -29,12 +29,12 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
       /**
         * Is a keyword requesting the use of the separated-border table rendering model. It is the default value.
         */
-      val separate = assignModLiterally(this, "separate")
+      val separate = this ::= "separate"
 
       /**
         * Is a keyword requesting the use of the collapsed-border table rendering model.
         */
-      val collapse = assignModLiterally(this, "collapse")
+      val collapse = this ::= "collapse"
     }
 
     /**
@@ -46,16 +46,16 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
     object spacing
       extends Property[Length]("border-spacing")
         with InheritGlobalValue
-        with P.BorderLengthOrEllipsoid
+        with MixinTraits.BorderLengthOrEllipsoid
 
     /**
       * The border-top CSS property is a shorthand that sets the values of border-top-color, border-top-style, and border-top-width. These properties describe the top border of elements.
       * https://developer.mozilla.org/en-US/docs/Web/CSS/border-top
       */
     object top
-      extends P.BorderCore
-        with P.BorderCommon
-        with P.BorderTopBottomCommon {
+      extends MixinTraits.BorderCore
+        with MixinTraits.BorderCommon
+        with MixinTraits.BorderTopBottomCommon {
       protected val prefix = "border-top"
     }
 
@@ -64,9 +64,9 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom
       */
     object bottom
-      extends P.BorderCore
-        with P.BorderCommon
-        with P.BorderTopBottomCommon {
+      extends MixinTraits.BorderCore
+        with MixinTraits.BorderCommon
+        with MixinTraits.BorderTopBottomCommon {
       protected val prefix = "border-bottom"
     }
 
@@ -75,8 +75,8 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/border-left
       */
     object left
-      extends P.BorderCore
-        with P.BorderCommon {
+      extends MixinTraits.BorderCore
+        with MixinTraits.BorderCommon {
       protected val prefix = "border-left"
     }
 
@@ -85,14 +85,14 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
       * https://developer.mozilla.org/en-US/docs/Web/CSS/border-right
       */
     object right
-      extends P.BorderCore
-        with P.BorderCommon {
+      extends MixinTraits.BorderCore
+        with MixinTraits.BorderCommon {
       protected val prefix = "border-right"
     }
 
   }
 
-  private object P {
+  object MixinTraits {
 
     trait BorderCore {
       protected val prefix: String
@@ -119,52 +119,52 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
         /**
           * Like for the hidden keyword, displays no border. In that case, except if a background image is set, the calculated values of border-top-width will be 0, even if specified otherwise through the property. In case of table cell and border collapsing, the none value has the lowest priority: it means that if any other conflicting border is set, it will be displayed.
           */
-        val none = assignModLiterally(this, "none")
+        val none = this ::= "none"
 
         /**
           * Like for the none keyword, displays no border. In that case, except if a background image is set, the calculated values of border-top-width will be 0, even if specified otherwise through the property. In case of table cell and border collapsing, the hidden value has the highest priority: it means that if any other conflicting border is set, it won't be displayed.
           */
-        val hidden = assignModLiterally(this, "hidden")
+        val hidden = this ::= "hidden"
 
         /**
           * Displays a series of rounded dots. The spacing of the dots are not defined by the specification and are implementation-specific. The radius of the dots is half the calculated border-top-width.
           */
-        val dotted = assignModLiterally(this, "dotted")
+        val dotted = this ::= "dotted"
 
         /**
           * Displays a series of short square-ended dashes or line segments. The exact size and length of the segments are not defined by the specification and are implementation-specific.
           */
-        val dashed = assignModLiterally(this, "dashed")
+        val dashed = this ::= "dashed"
 
         /**
           * Displays a single, straight, solid line.
           */
-        val solid = assignModLiterally(this, "solid")
+        val solid = this ::= "solid"
 
         /**
           * Displays two straight lines that add up to the pixel amount defined as border-width or border-top-width.
           */
-        val double = assignModLiterally(this, "double")
+        val double = this ::= "double"
 
         /**
           * Displays a border leading to a carved effect. It is the opposite of ridge.
           */
-        val groove = assignModLiterally(this, "groove")
+        val groove = this ::= "groove"
 
         /**
           * Displays a border with a 3D effect, like if it is coming out of the page. It is the opposite of groove.
           */
-        val ridge = assignModLiterally(this, "ridge")
+        val ridge = this ::= "ridge"
 
         /**
           * Displays a border that makes the box appear embedded. It is the opposite of outset. When applied to a table cell with border-collapse set to collapsed, this value behaves like groove.
           */
-        val inset = assignModLiterally(this, "inset")
+        val inset = this ::= "inset"
 
         /**
           * Displays a border that makes the box appear in 3D, embossed. It is the opposite of inset. When applied to a table cell with border-collapse set to collapsed, this value behaves like ridge.
           */
-        val outset = assignModLiterally(this, "outset")
+        val outset = this ::= "outset"
       }
 
       /**
@@ -176,21 +176,18 @@ trait BorderCluster[Mod] { this: Mixin[Mod] =>
       object width
         extends Property[Length]("border-top-width")
           with InheritGlobalValue {
-        val thin = assignModLiterally(this, "thin")
-        val medium = assignModLiterally(this, "medium")
-        val thick = assignModLiterally(this, "thick")
+        val thin = this ::= "thin"
+        val medium = this ::= "medium"
+        val thick = this ::= "thick"
       }
     }
 
     trait BorderLengthOrEllipsoid { this : Property[_] =>
       def apply(radius: Length): Mod =
-        assignMod(this, radius)
+        this ::= CssValue.of(radius)
 
       def apply(horizontal: Length, vertical: Length): Mod =
-        assignModLiterally(
-          this,
-          CssValue(CssValue.CssList(Seq(horizontal, vertical)))
-        )
+        this ::= CssValue.CssList.of(horizontal, vertical)
     }
 
     trait BorderTopBottomCommon { self: BorderCore =>

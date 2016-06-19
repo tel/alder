@@ -6,10 +6,10 @@ sealed trait Angle
 
 object Angle {
 
-  private case class Deg(a: Double) extends Angle
-  private case class Grad(a: Double) extends Angle
-  private case class Rad(a: Double) extends Angle
-  private case class Turn(a: Double) extends Angle
+  case class Deg(a: Double) extends Angle
+  case class Grad(a: Double) extends Angle
+  case class Rad(a: Double) extends Angle
+  case class Turn(a: Double) extends Angle
 
   implicit val angleIsCssValue = new CssValue[Angle] {
     def cssRepr(angle: Angle) = angle match {

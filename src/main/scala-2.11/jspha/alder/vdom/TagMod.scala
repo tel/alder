@@ -25,6 +25,7 @@ object TagMod {
   def append(f1: TagMod, f2: => TagMod): TagMod = TagMod(f1 andThen f2)
 
   case class Args(props: Map[String, js.Any],
+                  classes: Set[String],
                   children: js.Array[Element],
                   key: Option[String],
                   styles: Map[String, String]) {
@@ -46,10 +47,18 @@ object TagMod {
           case Some(k) => propsWithStyles + ("key" -> k)
         }
 
-      React.createElement(tag, Props.ofMap(propsWithKey), children:_*)
+      val propsWithClassName: Map[String, js.Any] =
+        propsWithKey + ("className" -> classes.mkString(" "))
+
+      React.createElement(
+        tag,
+        Props.ofMap(propsWithClassName),
+        children:_*
+      )
     }
 
     def addProp(key: String, value: js.Any) = copy(props = props + (key -> value))
+    def addClass(name: String) = copy(classes = classes + name)
     def setKey(keyName: String) = copy(key = Some(keyName))
     def addChild(child: Element) = copy(children = children :+ child)
     def addStyle(key: String, value: String) = copy(styles = styles + (key -> value))
@@ -65,7 +74,13 @@ object TagMod {
   }
 
   object Args {
-    val zero: Args = Args(Map(), js.Array(), None, Map())
+    val zero: Args = Args(
+      props = Map(),
+      classes = Set(),
+      children = js.Array(),
+      key = None,
+      styles = Map()
+    )
   }
 
 }

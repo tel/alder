@@ -1,8 +1,5 @@
 package jspha.alder.vdom.syntax
 
-/**
-  * Created by tel on 5/31/16.
-  */
 class Html[El, Mod](syntax: Internal[El, Mod]) {
 
   import syntax.makeFactory

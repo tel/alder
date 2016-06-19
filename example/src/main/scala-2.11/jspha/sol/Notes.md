@@ -1,9 +1,13 @@
 
 # Notes
 
+- Don't forget!
+  - [ ] `@charset` when creating a stylesheet???
+
 - references
   - https://css-modules.github.io/webpack-demo/
   - http://nicolasgallagher.com/about-html-semantics-front-end-architecture/
+  - https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
 
 - namespaces
   - classes (munged)
@@ -22,18 +26,19 @@
   - instead, creates nested *Scala* names which resolve to (concatenative,
     e.g., "a-b-c") final, munged names
     - like this
-      .btn { /* styles */ }
-      .uilist { /* styles */ }
-      .uilist-item { /* styles */ }
+      .btn { ... }
+      .uilist { ... }
+      .uilist-item { ... }
     - not
-      .btn { /* styles */ }
-      .uilist { /* styles */ }
-      .uilist a { /* styles */ }
+      .btn { ... }
+      .uilist { ... }
+      .uilist a { ... }
 
 - style-sets
   - sets of definitions, attribute->value mapping
   - *refinement* selectors
     - e.g.
+        ```
         &.hover                             // :hover
         &.hover.visited                     // :hover:visited
         &.hover.not(_.visited)              // :hover:not(:visited)
@@ -42,6 +47,7 @@
         &.nthChild("3n+2")                  // :nth-child(3n+2)
         &.attr("custom-attr", "bla").hover  // [custom-attr="bla"]:hover
         &.attrExists("custom-attr").hover   // [custom-attr]:hover
+        ```
     - but also e.g.
         @media screen
         @media screen, not handheld
@@ -77,3 +83,22 @@
     - packaging two files is necessary
     - sophisticated server integration required for build/generation
 
+- Not implemented
+  - `attr()`
+    - do this by hand if you want using `::=`, the types are meaningless
+  - `calc()` 
+    - do this is Scala
+  - `counter()` function in content definitions
+    - Just unsure how to do this nicely!
+  - `@import`
+    - Keep all your imported definitions Scala-local
+  - `@namespace`
+    - Better handled locally with Scala vars
+  - `var()`
+    - Better handled in Scala
+  - `@supports`
+    - Use case overlaps with built-in compatibility handling
+  - Types
+    - Frequency (not used in CSS today)
+      - hz (becomes unit "Hz", with no space)
+      - khz (becomes unit "kHz", with no space)

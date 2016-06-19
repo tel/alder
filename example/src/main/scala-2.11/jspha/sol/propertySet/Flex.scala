@@ -1,15 +1,22 @@
-package jspha.sol.properties
+package jspha.sol.propertySet
 
-trait FlexCluster[Mod] { this : Mixin[Mod] =>
+import jspha.sol.internal.Property
+
+trait Flex { this : CommonProperties =>
 
   /**
     * The flex CSS property is a shorthand property specifying the ability of a flex item to alter its dimensions to fill available space. Flex items can be stretched to use available space proportional to their flex grow factor or their flex shrink factor to prevent overflow.
     * https://developer.mozilla.org/en-US/docs/Web/CSS/flex
     */
-  object flex {
+  object flex
+    extends Property[Nothing]("flex")
+      with NoneValues
+      with AutoValues
+      with AllGlobalValues {
 
-    // TODO: shorthand
-    // TODO: flex-flow shorthand (https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow)
+    object flow
+      extends Property[Nothing]("flex-flow")
+        with AllGlobalValues
 
     /**
       * The flex-basis CSS property specifies the flex basis which is the initial main size of a flex item. This property determines the size of the content-box unless specified otherwise using box-sizing.
@@ -18,13 +25,13 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
     object basis
       extends Property[Int]("flex-basis")
         with AutoValues
-        with StandardGlobalValues {
+        with AllGlobalValues {
 
-      val fill = assignModLiterally(this, "fill")
-      val content = assignModLiterally(this, "content")
-      val maxContent = assignModLiterally(this, "max-content")
-      val minContent = assignModLiterally(this, "min-content")
-      val fitContent = assignModLiterally(this, "fit-content")
+      val fill = this ::= "fill"
+      val content = this ::= "content"
+      val maxContent = this ::= "max-content"
+      val minContent = this ::= "min-content"
+      val fitContent = this ::= "fit-content"
 
     }
 
@@ -35,27 +42,27 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
       */
     object direction
       extends Property[Nothing]("flex-direction")
-        with StandardGlobalValues {
+        with AllGlobalValues {
 
       /**
         * The flex container's main-axis is defined to be the same as the text direction. The main-start and main-end points are the same as the content direction.
         */
-      val row = assignModLiterally(this, "row")
+      val row = this ::= "row"
 
       /**
         * Behaves the same as row but the main-start and main-end points are permuted.
         */
-      val rowReverse = assignModLiterally(this, "row-reverse")
+      val rowReverse = this ::= "row-reverse"
 
       /**
         * The flex container's main-axis is the same as the block-axis. The main-start and main-end points are the same as the before and after points of the writing-mode.
         */
-      val column = assignModLiterally(this, "column")
+      val column = this ::= "column"
 
       /**
         * Behaves the same as column but the main-start and main-end are permuted.
         */
-      val columnReverse = assignModLiterally(this, "column-reverse")
+      val columnReverse = this ::= "column-reverse"
 
     }
 
@@ -65,22 +72,22 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
       */
     object wrap
       extends Property[Nothing]("flex-wrap")
-        with StandardGlobalValues {
+        with AllGlobalValues {
 
       /**
         * The flex items are laid out in a single line which may cause the flex container to overflow. The cross-start is either equivalent to start or before depending flex-direction value.
         */
-      val nowrap = assignModLiterally(this, "nowrap")
+      val nowrap = this ::= "nowrap"
 
       /**
         * The flex items break into multiple lines. The cross-start is either equivalent to start or before depending flex-direction value and the cross-end is the opposite of the specified cross-start.
         */
-      val wrap = assignModLiterally(this, "wrap")
+      val wrap = this ::= "wrap"
 
       /**
         * Behaves the same as wrap but cross-start and cross-end are permuted.
         */
-      val wrapReverse = assignModLiterally(this, "wrap-reverse")
+      val wrapReverse = this ::= "wrap-reverse"
     }
 
     /**
@@ -89,7 +96,7 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
       */
     object grow
       extends Property[Double]("flex-grow")
-        with StandardGlobalValues
+        with AllGlobalValues
 
     /**
       * The flex-shrink CSS property specifies the flex shrink factor of a flex item.
@@ -97,7 +104,7 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
       */
     object shrink
       extends Property[Double]("flex-shrink")
-        with StandardGlobalValues
+        with AllGlobalValues
 
   }
 
@@ -110,37 +117,37 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
       */
     object content
       extends Property[Nothing]("align-content")
-        with StandardGlobalValues {
+        with AllGlobalValues {
 
       /**
         * Lines are packed starting from the cross-start. Cross-start edge of the first line and cross-start edge of the flex container are flushed together. Each following line is flush with the preceding.
         */
-      val flexStart = assignModLiterally(this, "flex-start")
+      val flexStart = this ::= "flex-start"
 
       /**
         * Lines are packed starting from the cross-end. Cross-end of the last line and cross-end of the flex container are flushed together. Each preceding line is flushed with the following line.
         */
-      val flexEnd = assignModLiterally(this, "flex-end")
+      val flexEnd = this ::= "flex-end"
 
       /**
         * Lines are packed toward the center of the flex container. The lines are flushed with each other and aligned in the center of the flex container. Space between the cross-start edge of the flex container and first line and between cross-end of the flex container and the last line is the same.
         */
-      val center = assignModLiterally(this, "center")
+      val center = this ::= "center"
 
       /**
         * Lines are evenly distributed in the flex container. The spacing is done such as the space between two adjacent items is the same. Cross-start edge and cross-end edge of the flex container are flushed with respectively first and last line edges.
         */
-      val spaceBetween = assignModLiterally(this, "space-between")
+      val spaceBetween = this ::= "space-between"
 
       /**
         * Lines are evenly distributed so that the space between two adjacent lines is the same. The empty space before the first and after the last lines equals half of the space between two adjacent lines.
         */
-      val spaceAround = assignModLiterally(this, "space-around")
+      val spaceAround = this ::= "space-around"
 
       /**
         * Lines stretch to use the remaining space. The free-space is split equally between all the lines.
         */
-      val stretch = assignModLiterally(this, "stretch")
+      val stretch = this ::= "stretch"
     }
 
     /**
@@ -149,32 +156,32 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
       */
     object items
       extends Property[Nothing]("align-items")
-        with StandardGlobalValues {
+        with AllGlobalValues {
 
       /**
         * The cross-start margin edge of the flex item is flushed with the cross-start edge of the line.
         */
-      val flexStart = assignModLiterally(this, "flex-start")
+      val flexStart = this ::= "flex-start"
 
       /**
         * The cross-end margin edge of the flex item is flushed with the cross-end edge of the line.
         */
-      val flexEnd = assignModLiterally(this, "flex-end")
+      val flexEnd = this ::= "flex-end"
 
       /**
         * The flex item's margin box is centered within the line on the cross-axis. If the cross-size of the item is larger than the flex container, it will overflow equally in both directions.
         */
-      val center = assignModLiterally(this, "center")
+      val center = this ::= "center"
 
       /**
         * All flex items are aligned such that their baselines align. The item with the largest distance between its cross-start margin edge and its baseline is flushed with the cross-start edge of the line.
         */
-      val baseline = assignModLiterally(this, "baseline")
+      val baseline = this ::= "baseline"
 
       /**
         * Flex items are stretched such as the cross-size of the item's margin box is the same as the line while respecting width and height constraints.
         */
-      val stretch = assignModLiterally(this, "stretch")
+      val stretch = this ::= "stretch"
     }
 
     /**
@@ -184,32 +191,32 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
     object self
       extends Property[Nothing]("align-self")
         with AutoValues
-        with StandardGlobalValues {
+        with AllGlobalValues {
 
       /**
         * The cross-start margin edge of the flex item is flushed with the cross-start edge of the line.
         */
-      val flexStart = assignModLiterally(this, "flex-start")
+      val flexStart = this ::= "flex-start"
 
       /**
         * The cross-end margin edge of the flex item is flushed with the cross-end edge of the line.
         */
-      val flexEnd = assignModLiterally(this, "flex-end")
+      val flexEnd = this ::= "flex-end"
 
       /**
         * The flex item's margin box is centered within the line on the cross-axis. If the cross-size of the item is larger than the flex container, it will overflow equally in both directions.
         */
-      val center = assignModLiterally(this, "center")
+      val center = this ::= "center"
 
       /**
         * All flex items are aligned such that their baselines align. The item with the largest distance between its cross-start margin edge and its baseline is flushed with the cross-start edge of the line.
         */
-      val baseline = assignModLiterally(this, "baseline")
+      val baseline = this ::= "baseline"
 
       /**
         * Flex items are stretched such as the cross-size of the item's margin box is the same as the line while respecting width and height constraints.
         */
-      val stretch = assignModLiterally(this, "stretch")
+      val stretch = this ::= "stretch"
     }
   }
 
@@ -220,32 +227,32 @@ trait FlexCluster[Mod] { this : Mixin[Mod] =>
     */
   object justifyContent
     extends Property[Nothing]("justify-content")
-      with StandardGlobalValues {
+      with AllGlobalValues {
 
     /**
       * The flex items are packed starting from the main-start. Margins of the first flex item is flushed with the main-start edge of the line and each following flex item is flushed with the preceding.
       */
-    val flexStart = assignModLiterally(this, "flex-start")
+    val flexStart = this ::= "flex-start"
 
     /**
       * The flex items are packed starting from the main-end. The margin edge of the last flex item is flushed with the main-end edge of the line and each preceding flex item is flushed with the following.
       */
-    val flexEnd = assignModLiterally(this, "flex-end")
+    val flexEnd = this ::= "flex-end"
 
     /**
       * The flex items are packed toward the center of the line. The flex items are flushed with each other and aligned in the center of the line. Space between the main-start edge of the line and first item and between main-end and the last item of the line is the same.
       */
-    val center = assignModLiterally(this, "center")
+    val center = this ::= "center"
 
     /**
       * Flex items are evenly distributed along the line. The spacing is done such as the space between two adjacent items is the same. Main-start edge and main-end edge are flushed with respectively first and last flex item edges.
       */
-    val spaceBetween = assignModLiterally(this, "space-between")
+    val spaceBetween = this ::= "space-between"
 
     /**
       * Flex items are evenly distributed so that the space between two adjacent items is the same. The empty space before the first and after the last items equals half of the space between two adjacent items.
       */
-    val spaceAround = assignModLiterally(this, "space-around")
+    val spaceAround = this ::= "space-around"
   }
 
 }

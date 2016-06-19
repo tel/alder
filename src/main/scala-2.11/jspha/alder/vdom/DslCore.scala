@@ -32,6 +32,9 @@ object DslCore extends Internal[Element, TagMod] {
   def key(keyName: String): TagMod =
     TagMod(_.setKey(keyName))
 
+  def className(name: String): TagMod =
+    TagMod(_.addClass(name))
+
   implicit def child(el: Element): TagMod =
     TagMod(_.addChild(el))
 

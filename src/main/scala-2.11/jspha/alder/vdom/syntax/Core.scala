@@ -10,6 +10,8 @@ trait Core[El, Mod] {
 
   implicit def textChild(str: String): Mod
 
+  def className(name: String): Mod
+
   def key(keyName: String): Mod
 
   def style(key: String, value: String): Mod

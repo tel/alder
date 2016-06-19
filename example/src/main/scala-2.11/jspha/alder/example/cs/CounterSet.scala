@@ -1,7 +1,6 @@
 package jspha.alder.example.cs
 
 import jspha.alder.{Facet, Element}
-import jspha.alder.vdom.Dsl
 
 import scala.util.Random
 

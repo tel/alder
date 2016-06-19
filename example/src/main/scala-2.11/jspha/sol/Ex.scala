@@ -1,11 +1,17 @@
 package jspha.sol
 
-class Ex[Sty, Mod](syn: Syntax[Sty, Mod]) {
-  import syn._
+object Ex extends Stylesheet {
+
   import Properties._
 
-  val x = classNamed("foo")(
+  val x = module("foo")(
     flex.basis.content,
-    border.left.style.dashed
+    border.left.style.dashed,
+    "foo" ::= "bar",
+    justifyContent ::= "foo",
+    pseudoClass(PseudoClass.link)(
+      border.bottom.color := Color.Names.white
+    )
   )
+
 }

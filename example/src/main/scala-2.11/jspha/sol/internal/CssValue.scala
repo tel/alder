@@ -16,27 +16,34 @@ trait CssValue[A] {
 
 object CssValue {
 
+  def apply[A: CssValue]: CssValue[A] =
+    implicitly
 
-  def apply[A](a: A)(implicit ev: CssValue[A]): String =
-    ev.cssRepr(a)
+  def of[A: CssValue](a: A) =
+    apply[A].cssRepr(a)
 
   def fromToString[A] = new CssValue[A] {
     def cssRepr(a: A) = a.toString
   }
 
+  implicit val nothingIsCssValue = new CssValue[Nothing] {
+    def cssRepr(self: Nothing) =
+      sys.error("Received value of Nothing when computing a CssValue.")
+  }
   implicit val intIsCssValue = fromToString[Int]
   implicit val doubleIsCssValue = fromToString[Double]
 
-  case class Literal(lit: String)
-
-  implicit val literalIsCssValue = new CssValue[Literal] {
-    def cssRepr(self: Literal) = self.lit
-  }
-
+  /**
+    * CSS lists are space separated
+    */
   case class CssList[A](seq: Seq[A])
 
   implicit def sequenceIsCssValue[A: CssValue] = new CssValue[CssList[A]] {
     def cssRepr(self: CssList[A]) =
-      self.seq.map(CssValue(_)).mkString(" ")
+      self.seq.map(CssValue.of(_)).mkString(" ")
+  }
+
+  object CssList {
+    def of[A: CssValue](as: A*): String = CssValue.of(CssList(as))
   }
 }
