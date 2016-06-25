@@ -94,12 +94,12 @@
     ]
 - [ ] Ratio
   - [ ] Math Operators
-  - [ ] n '/' m
+  - [X] n '/' m
 - [ ] Resolution
   - [ ] Math Operators
-  - [ ] dpcm
-  - [ ] dpi
-  - [ ] dppx
+  - [X] dpcm
+  - [X] dpi
+  - [X] dppx
 - [ ] Shape
   - [ ] rect()
 - TimingFunction
@@ -113,27 +113,27 @@
   - [ ] step-start
   - [ ] step-end
 - [ ] TransformFunction
-  - [ ] matrix()
-  - [ ] matrix3d()
-  - [ ] perspective()
-  - [ ] rotate()
-  - [ ] rotate3d()
-  - [ ] rotateX()
-  - [ ] rotateY()
-  - [ ] rotateZ()
-  - [ ] scale()
-  - [ ] scale3d()
-  - [ ] scaleX()
-  - [ ] scaleY()
-  - [ ] scaleZ()
-  - [ ] skew()
-  - [ ] skewX()
-  - [ ] skewY()
-  - [ ] translate()
-  - [ ] translate3d()
-  - [ ] translateX()
-  - [ ] translateY()
-  - [ ] translateZ()
+  - [X] matrix()
+  - [X] matrix3d()
+  - [X] perspective()
+  - [X] rotate()
+  - [X] rotate3d()
+  - [X] rotateX()
+  - [X] rotateY()
+  - [X] rotateZ()
+  - [X] scale()
+  - [X] scale3d()
+  - [X] scaleX()
+  - [X] scaleY()
+  - [X] scaleZ()
+  - [X] skew()
+  - [X] skewX()
+  - [X] skewY()
+  - [X] translate()
+  - [X] translate3d()
+  - [X] translateX()
+  - [X] translateY()
+  - [X] translateZ()
 - [ ] URL
-  - [ ] url 
+  - [X] url 
 

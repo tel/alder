@@ -143,6 +143,7 @@ class Stylesheet private(val mode: Stylesheet.Mode,
   val Length = types.Length
   val Ratio = types.Ratio
   val Resolution = types.Resolution
+  val TransformFunction = types.TransformFunction
   val Url = types.Url
 
   // Private definitions

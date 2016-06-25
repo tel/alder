@@ -2,14 +2,27 @@ package jspha.sol.types
 
 import jspha.sol.internal.CssValue
 
-sealed trait Angle
+sealed trait Angle {
+  def radians: Angle.Rad
+  def cos: Double = Math.cos(radians.a)
+  def sin: Double = Math.sin(radians.a)
+  def tan: Double = Math.tan(radians.a)
+}
 
 object Angle {
 
-  case class Deg(a: Double) extends Angle
-  case class Grad(a: Double) extends Angle
-  case class Rad(a: Double) extends Angle
-  case class Turn(a: Double) extends Angle
+  case class Deg(a: Double) extends AnyVal with Angle {
+    def radians = Rad(a/360 * 2 * Math.PI)
+  }
+  case class Grad(a: Double) extends AnyVal with Angle {
+    def radians = Rad(a/400 * 2 * Math.PI)
+  }
+  case class Rad(a: Double) extends AnyVal with Angle {
+    def radians = this
+  }
+  case class Turn(a: Double) extends AnyVal with Angle {
+    def radians = Rad(a * 2 * Math.PI)
+  }
 
   implicit val angleIsCssValue = new CssValue[Angle] {
     def cssRepr(angle: Angle) = angle match {
