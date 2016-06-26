@@ -1,6 +1,6 @@
-package jspha.sol.types
+package jspha.sol.dsl.types
 
-import jspha.sol.internal.CssValue
+import jspha.sol.dsl.CssValue
 
 case class Ratio(numerator: Int, denominator: Int)
 

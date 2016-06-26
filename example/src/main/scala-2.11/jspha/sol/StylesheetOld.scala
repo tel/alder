@@ -1,5 +1,6 @@
 package jspha.sol
 
+import jspha.sol.dsl.CssValue
 import jspha.sol.internal._
 
 import scala.util.Random
@@ -8,15 +9,15 @@ import scala.util.Random
   * A `Stylesheet` allows you to create new styles and eventually write them
   * to the DOM.
   */
-class Stylesheet private(val mode: Stylesheet.Mode,
-                         val nameHere: Option[String],
-                         val subNames: Seq[String]) {
+class StylesheetOld private(val mode: StylesheetOld.Mode,
+                            val nameHere: Option[String],
+                            val subNames: Seq[String]) {
 
   /**
     * Constructs a fresh stylesheet. Set the mode immediately to generate the
     * proper names
     */
-  def this(mode: Stylesheet.Mode = Stylesheet.Development) =
+  def this(mode: StylesheetOld.Mode = StylesheetOld.Development) =
     this(mode = mode, nameHere = None, subNames = Seq())
 
   /**
@@ -32,7 +33,7 @@ class Stylesheet private(val mode: Stylesheet.Mode,
     */
   protected def module(name: String)(mods: Mod*): Style = {
     val nonce = Random.alphanumeric.take(4).mkString
-    val realName = Name(mode, prefixNames, name, nonce)
+    val realName = dsl.Name(mode, prefixNames, name, nonce)
     registerClass(realName, mods)
     Style(mods, realName)
   }
@@ -118,10 +119,10 @@ class Stylesheet private(val mode: Stylesheet.Mode,
   */
 
   object Properties
-    extends propertySet.CommonProperties
-      with propertySet.Flex
-      with propertySet.Border
-      with propertySet.ListStyle
+    extends jspha.sol.dsl.propertySet.CommonProperties
+      with jspha.sol.dsl.propertySet.Flex
+      with jspha.sol.dsl.propertySet.Border
+      with jspha.sol.dsl.propertySet.ListStyle
 
   val Selectors = Selector
   val PseudoClass = Selector.PseudoClass
@@ -133,7 +134,7 @@ class Stylesheet private(val mode: Stylesheet.Mode,
   }
 
   class Sub(val subName: String)
-    extends Stylesheet(mode, Some(subName), prefixNames)
+    extends StylesheetOld(mode, Some(subName), prefixNames)
 
 
   // Types
@@ -149,12 +150,12 @@ class Stylesheet private(val mode: Stylesheet.Mode,
   // Private definitions
 
   private var globalRegistry: Map[Selector.Global, Seq[Mod]] = Map()
-  private var classRegistry: Map[Name, Seq[Mod]] = Map()
+  private var classRegistry: Map[dsl.Name, Seq[Mod]] = Map()
 
   private def registerGlobal(selector: Selector.Global, value: Seq[Mod]): Unit =
     globalRegistry = globalRegistry + (selector -> value)
 
-  private def registerClass(name: Name, value: Seq[Mod]): Unit =
+  private def registerClass(name: dsl.Name, value: Seq[Mod]): Unit =
     classRegistry = classRegistry + (name -> value)
 
   private lazy val prefixNames =
@@ -162,7 +163,7 @@ class Stylesheet private(val mode: Stylesheet.Mode,
 
 }
 
-object Stylesheet {
+object StylesheetOld {
 
   sealed trait Mode
   case object Development extends Mode

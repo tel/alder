@@ -1,6 +1,7 @@
 package jspha.sol.internal
 
-import jspha.sol.types.{Length, Ratio, Resolution}
+import jspha.sol.dsl.CssValue
+import jspha.sol.dsl.types.{Length, Ratio, Resolution}
 
 sealed trait MediaConstraint {
   def repr: String

@@ -1,4 +1,4 @@
-package jspha.sol.propertySet
+package jspha.sol.dsl.propertySet
 
 import jspha.sol.internal.{Mod, Property}
 

@@ -10,6 +10,9 @@ object Selector {
   type Local = Selector[Name]
   type Global = Selector[Any]
 
+  def genGlobal(s: Global): String = s.gen(())
+  def genLocal(s: Local, n: Name): String = s.gen(n)
+
   sealed trait Ns
 
   object Ns {
@@ -172,6 +175,8 @@ object Selector {
   case class Class(cls: String) extends Selector[Any] {
     def gen(a: Any) = s".$cls"
   }
+
+  def classOfName(n: Name): Selector[Any] = Class(n.className)
 
   private case class Out[A](rep: A => String) extends Selector[A] {
     def gen(a: A) = rep(a)

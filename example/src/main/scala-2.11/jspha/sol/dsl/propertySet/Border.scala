@@ -1,7 +1,8 @@
-package jspha.sol.propertySet
+package jspha.sol.dsl.propertySet
 
-import jspha.sol.internal.{CssValue, Mod, Property}
-import jspha.sol.types.{Color, Length}
+import jspha.sol.dsl.CssValue
+import jspha.sol.internal.{Mod, Property}
+import jspha.sol.dsl.types.{Color, Length}
 
 trait Border { this: CommonProperties =>
 

@@ -1,4 +1,4 @@
-package jspha.sol.internal
+package jspha.sol.dsl
 
 /**
   * Typeclass describing how a value gets transformed into a CSS-value, i.e.

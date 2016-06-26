@@ -8,7 +8,7 @@ object Mod {
 
   case class PropertyAssign(key: String, value: String) extends Mod
   case class Sequence(mods: Seq[Mod]) extends Mod
-  case class Include(name: Name) extends Mod
+  case class Include(style: Style) extends Mod
   case class Selected(selector: Selector.Local, mods: Seq[Mod]) extends Mod
   case class MediaConstrained(mqs: Seq[MediaConstraint], mods: Seq[Mod]) extends Mod
 
@@ -25,7 +25,7 @@ object Mod {
     Sequence(mods)
 
   implicit def include(style: Style): Mod =
-    Include(style.name)
+    Include(style)
 
 }
 

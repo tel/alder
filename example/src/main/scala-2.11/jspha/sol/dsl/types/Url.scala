@@ -1,7 +1,8 @@
-package jspha.sol.types
+package jspha.sol.dsl.types
+
+import jspha.sol.dsl.CssValue
 
 import scala.language.implicitConversions
-import jspha.sol.internal.CssValue
 
 case class Url(url: String)
 

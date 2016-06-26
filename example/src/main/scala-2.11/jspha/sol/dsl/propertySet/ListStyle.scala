@@ -1,7 +1,8 @@
-package jspha.sol.propertySet
+package jspha.sol.dsl.propertySet
 
+import jspha.sol.dsl.Name
 import jspha.sol.internal.{CounterStyle, Mod, Property}
-import jspha.sol.types.Url
+import jspha.sol.dsl.types.Url
 
 trait ListStyle { this: CommonProperties =>
 
@@ -67,9 +68,11 @@ trait ListStyle { this: CommonProperties =>
       def apply(ty: String) = this ::= s"'$ty'"
 
       /**
-        * A identifier for a @counter-style or an inline one from `symbols()`
+        * A identifier for a @counter-style
         */
-      def apply(sty: CounterStyle) = this := sty
+      def apply(styleName: Name[Name.CounterStyle]) = this := styleName
+
+      // TODO: or an inline one from `symbols()`
 
       val disc = this ::= "disc"
       val circle = this ::= "circle"
