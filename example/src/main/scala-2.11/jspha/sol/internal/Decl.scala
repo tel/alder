@@ -41,12 +41,12 @@ object Decl {
 
   }
 
-  def ofMod(sel: Selector.Global, mods: Seq[Mod]): Seq[Decl] = {
-
-  }
-
-  def ofMods(modMap: Map[Selector.Global, Seq[Mod]]): Seq[Decl] = {
-    modMap.flatMap((ofMod _).tupled)(breakOut)
-  }
+//  def ofMod(sel: Selector.Global, mods: Seq[Mod]): Seq[Decl] = {
+//
+//  }
+//
+//  def ofMods(modMap: Map[Selector.Global, Seq[Mod]]): Seq[Decl] = {
+//    modMap.flatMap((ofMod _).tupled)(breakOut)
+//  }
 
 }

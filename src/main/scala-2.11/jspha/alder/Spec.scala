@@ -1,10 +1,10 @@
 package jspha.alder
 
-import jspha.alder.raw.{Element, Singl}
+import jspha.alder.raw.Singl
 
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.{ThisFunction0, ThisFunction1, ThisFunction2, UndefOr}
+import scala.scalajs.js._
 
 /**
   * More Scala-like interface for creating new React components. Can be a
@@ -41,19 +41,19 @@ trait Spec[P, S] {
     * Invoked once before the component is mounted. The return value will be
     * used as the initial value of `this.state`.
     */
-  def getInitialState: Option[S] = None
+  def getInitialState(props: P): S
 
-  /**
-    * Invoked once and cached when the class is created. Values in the
-    * mapping will be set on this.props if that prop is not specified by the
-    * parent component (i.e. using an in check).
-    *
-    * This method is invoked before any instances are created and thus
-    * cannot rely on this.props. In addition, be aware that any complex
-    * objects returned by getDefaultProps() will be shared across instances,
-    * not copied.
-    */
-  def getDefaultProps: Option[P] = None
+//  /**
+//    * Invoked once and cached when the class is created. Values in the
+//    * mapping will be set on this.props if that prop is not specified by the
+//    * parent component (i.e. using an in check).
+//    *
+//    * This method is invoked before any instances are created and thus
+//    * cannot rely on this.props. In addition, be aware that any complex
+//    * objects returned by getDefaultProps() will be shared across instances,
+//    * not copied.
+//    */
+//  def getDefaultProps: Option[P] = None
 
   /**
     * Invoked once, both on the client and server, immediately before the initial
@@ -147,6 +147,11 @@ trait Spec[P, S] {
 
     val render: ThisFunction0[raw.Component[P, S], Element] =
       (c: raw.Component[P, S]) => self.render(Component.fromRaw(c))
+
+    override val getInitialState: UndefOr[ThisFunction0[raw.Component[P, S], Singl[S]]] =
+      raw.Spec.value { (c: raw.Component[P, S]) =>
+        Singl(self.getInitialState(c.props.get.value))
+      }
 
     override val componentWillMount: UndefOr[ThisFunction0[raw.Component[P, S], Unit]] =
       raw.Spec.value { (c: raw.Component[P, S]) =>

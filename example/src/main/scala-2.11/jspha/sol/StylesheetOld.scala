@@ -3,8 +3,6 @@ package jspha.sol
 import jspha.sol.dsl.CssValue
 import jspha.sol.internal._
 
-import scala.util.Random
-
 /**
   * A `Stylesheet` allows you to create new styles and eventually write them
   * to the DOM.
@@ -24,19 +22,19 @@ class StylesheetOld private(val mode: StylesheetOld.Mode,
     * Registers a global style in this sheet. Note that a `Global` selector
     * cannot use `&`---the types will prevent you.
     */
-  protected def global(selector: Selector.Global)(mods: Mod*): Unit =
-    registerGlobal(selector, mods)
+//  protected def global(selector: Selector.Global)(mods: Mod*): Unit =
+//    registerGlobal(selector, mods)
 
   /**
     * Registers a local style in this sheet and returns details to include
     * its class name in an element
     */
-  protected def module(name: String)(mods: Mod*): Style = {
-    val nonce = Random.alphanumeric.take(4).mkString
-    val realName = dsl.Name(mode, prefixNames, name, nonce)
-    registerClass(realName, mods)
-    Style(mods, realName)
-  }
+//  protected def module(name: String)(mods: Mod*): Style = {
+//    val nonce = Random.alphanumeric.take(4).mkString
+//    val realName = dsl.Name(mode, prefixNames, name, nonce)
+//    registerClass(realName, mods)
+//    Style(mods, realName)
+//  }
 
   /**
     * Defines a new CSS rule under knowledge of the local name (passed in).
@@ -139,24 +137,24 @@ class StylesheetOld private(val mode: StylesheetOld.Mode,
 
   // Types
 
-  val Angle = types.Angle
-  val Color = types.Color
-  val Length = types.Length
-  val Ratio = types.Ratio
-  val Resolution = types.Resolution
-  val TransformFunction = types.TransformFunction
-  val Url = types.Url
+//  val Angle = types.Angle
+//  val Color = types.Color
+//  val Length = types.Length
+//  val Ratio = types.Ratio
+//  val Resolution = types.Resolution
+//  val TransformFunction = types.TransformFunction
+//  val Url = types.Url
 
   // Private definitions
 
-  private var globalRegistry: Map[Selector.Global, Seq[Mod]] = Map()
-  private var classRegistry: Map[dsl.Name, Seq[Mod]] = Map()
+//  private var globalRegistry: Map[Selector.Global, Seq[Mod]] = Map()
+//  private var classRegistry: Map[dsl.Name, Seq[Mod]] = Map()
 
-  private def registerGlobal(selector: Selector.Global, value: Seq[Mod]): Unit =
-    globalRegistry = globalRegistry + (selector -> value)
-
-  private def registerClass(name: dsl.Name, value: Seq[Mod]): Unit =
-    classRegistry = classRegistry + (name -> value)
+//  private def registerGlobal(selector: Selector.Global, value: Seq[Mod]): Unit =
+//    globalRegistry = globalRegistry + (selector -> value)
+//
+//  private def registerClass(name: dsl.Name, value: Seq[Mod]): Unit =
+//    classRegistry = classRegistry + (name -> value)
 
   private lazy val prefixNames =
     nameHere.fold(subNames)(subNames :+ _)

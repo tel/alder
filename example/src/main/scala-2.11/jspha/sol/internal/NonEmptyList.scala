@@ -3,25 +3,25 @@ package jspha.sol.internal
 /**
   * Created by tel on 6/26/16.
   */
-case class NonEmptyList[T](head: T, tail: Seq[T]) {
+class NonEmptyList[T](val head: T, val tail: Seq[T]) {
 
   def seq: Seq[T] = head +: tail
 
   def +:(newHead: T): NonEmptyList[T] =
-    NonEmptyList(
+    new NonEmptyList(
       head = newHead,
       tail = seq
     )
 
   def :+(newEnd: T): NonEmptyList[T] =
-    copy(tail = tail :+ newEnd)
+    new NonEmptyList(head = head, tail = tail :+ newEnd)
 
   def ++(newTail: NonEmptyList[T]): NonEmptyList[T] =
-    copy(tail = tail ++ seq)
+    new NonEmptyList(head = head, tail = tail ++ seq)
 
 }
 
 object NonEmptyList {
-  def apply[T](head: T, rest: T*) =
-    NonEmptyList(head, rest)
+  def apply[T](head: T, rest: T*): NonEmptyList[T] =
+    new NonEmptyList(head, rest)
 }

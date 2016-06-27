@@ -1,7 +1,7 @@
 package jspha.sol.dsl.propertySet
 
 import jspha.sol.dsl.Name
-import jspha.sol.internal.{CounterStyle, Mod, Property}
+import jspha.sol.internal.{Mod, Property}
 import jspha.sol.dsl.types.Url
 
 trait ListStyle { this: CommonProperties =>
@@ -49,7 +49,7 @@ trait ListStyle { this: CommonProperties =>
       /**
         * Location of image to use as the marker.
         */
-      def apply(url: Url) = this := Url
+      def apply(url: Url) = this := url
 
     }
 

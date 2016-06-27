@@ -1,5 +1,6 @@
 package jspha.sol.dsl
 
+import scala.language.implicitConversions
 import jspha.sol.dsl.types.{Length, Ratio, Resolution}
 import jspha.sol.internal.{Builder, NonEmptyList}
 
@@ -24,7 +25,7 @@ sealed trait MediaQuery {
         other match {
           case MediaQuery.Conj(mqsOther) =>
             MediaQuery.Conj(this +: mqsOther)
-          case _ => MediaQuery.Conj(Seq(this, other))
+          case _ => MediaQuery.Conj(NonEmptyList(this, other))
         }
     }
 
@@ -35,32 +36,33 @@ sealed trait MediaQuery {
   def not: MediaQueryDisj =
     MediaQueryDisj.Fails(this)
 
-  def isTrue: Boolean =
-    MediaQuery.isTrue(this)
 }
 
 object MediaQuery {
 
-  implicit final case class Type(mt: MediaType) extends MediaQuery
+  final case class Type(mt: MediaType) extends MediaQuery
   case class Feature(key: String, value: Option[String]) extends MediaQuery
   final case class Conj(mqs: NonEmptyList[MediaQuery]) extends MediaQuery
 
-  val isCssFragment: CssFragment[MediaQuery] = new CssFragment[MediaQuery] {
-    def write(self: MediaQuery): Builder =
-      self match {
-        case Type(mt) => CssValue.of(mt)
-        case Feature(k, mayv) => mayv match {
-          case None => k
-          case Some(v) => s"($k: $v)"
+  implicit def liftMediaType(mt: MediaType): MediaQuery = Type(mt)
+
+  implicit val isCssFragment: CssFragment[MediaQuery] =
+    new CssFragment[MediaQuery] {
+      def write(self: MediaQuery): Builder =
+        self match {
+          case Type(mt) => CssValue.of(mt)
+          case Feature(k, mayv) => mayv match {
+            case None => k
+            case Some(v) => s"($k: $v)"
+          }
+          case Conj(nel) =>
+            Builder.ofSeq[MediaQuery](
+              f = CssFragment.write(_),
+              bs = nel.seq,
+              sep = " and "
+            )
         }
-        case Conj(nel) =>
-          Builder.ofSeq[MediaQuery](
-            f = CssFragment.write(_),
-            bs = nel.seq,
-            sep = " and "
-          )
-      }
-  }
+    }
 
   /**
     * Listing of standard features.

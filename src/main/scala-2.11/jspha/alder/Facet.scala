@@ -1,7 +1,7 @@
 package jspha.alder
 
+import scala.language.implicitConversions
 import jspha.alder.raw._
-import org.scalajs.dom
 
 import scala.scalajs.js
 
@@ -119,27 +119,10 @@ abstract class Facet {
 }
 
 object Facet {
+
   type Aux[M, A] = Facet {
     type Model = M
     type Action = A
   }
 
-  trait Initialized extends Facet {
-    def init: Model
-  }
-
-  object Initialized {
-    def apply(facet: Facet)(initialState: facet.Model): Initialized = {
-      new Initialized {
-        type Model = facet.Model
-        type Action = facet.Action
-
-        def init = initialState
-        def view(model: Model, submit: Action => Unit) =
-          facet.view(model, submit)
-        def step(action: Action, model: Model) =
-          facet.step(action, model)
-      }
-    }
-  }
 }

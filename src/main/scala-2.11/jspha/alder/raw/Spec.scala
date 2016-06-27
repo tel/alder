@@ -46,7 +46,8 @@ abstract class Spec[P, S] extends js.Object {
     * Invoked once before the component is mounted. The return value will be
     * used as the initial value of `this.state`.
     */
-  def getInitialState(): js.UndefOr[Singl[S]] = Spec.noOp
+  val getInitialState: js.UndefOr[js.ThisFunction0[Component[P, S], Singl[S]]] =
+    Spec.noOp
 
   /**
     * Invoked once and cached when the class is created. Values in the

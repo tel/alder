@@ -1,6 +1,6 @@
 package jspha.alder
 
-import jspha.alder.Facet.Initialized
+import jspha.alder.facet.Initialized
 import jspha.alder.raw.ReactDOM
 import org.scalajs.dom
 

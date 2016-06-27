@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Alder Examples</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alder • TodoMVC</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
 <div id="app"></div>
 
+<footer class="info">
+    <p>Double-click to edit a todo</p>
+    <p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+    <p>Created by <a href="jspha.com">Joseph Tel Abrahamson</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+
 <script type="text/javascript" src="../example-fastopt.js"></script>
 <script type="text/javascript" src="../example-jsdeps.js"></script>
 <script type="text/javascript" src="/workbench.js"></script>
 <script>
-    window.app = jspha.alder.example.AlderExample();
+    window.app = jspha.alder.example.todomvc.TodoMVC();
     window.app.main();
 </script>
 

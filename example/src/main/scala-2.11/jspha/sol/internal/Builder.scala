@@ -5,7 +5,8 @@ import scala.language.implicitConversions
 /**
   * Functional wrapper around StringBuilder.
   */
-case class Builder(f: StringBuilder => StringBuilder) extends Function {
+case class Builder(f: StringBuilder => StringBuilder)
+  extends Function[StringBuilder, StringBuilder] {
 
   def apply(sb: StringBuilder): StringBuilder = f(sb)
 

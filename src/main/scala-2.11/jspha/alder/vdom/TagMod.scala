@@ -12,6 +12,15 @@ import scala.scalajs.js
   */
 trait TagMod extends (TagMod.Args => TagMod.Args) {
   def buildElement(tag: String): Element = apply(TagMod.Args.zero) toElement tag
+
+  /**
+    * Enable a TagMod only conditionally.
+    */
+  def when(cond: Boolean): TagMod =
+    if (cond)
+      this
+    else
+      None
 }
 
 object TagMod {
@@ -23,6 +32,9 @@ object TagMod {
   def zero: TagMod = TagMod(identity[Args])
 
   def append(f1: TagMod, f2: => TagMod): TagMod = TagMod(f1 andThen f2)
+
+  implicit def optionalTagMod(option: Option[TagMod]): TagMod =
+    option.fold(zero)(identity _)
 
   case class Args(props: Map[String, js.Any],
                   classes: Set[String],

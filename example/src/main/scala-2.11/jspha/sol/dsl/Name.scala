@@ -32,11 +32,11 @@ object Name {
     * of prefixes. Each call to `fresh` produces a unique name unequal to any
     * others even if they share localNames and prefixes.
     */
-  def fresh[A](localName: String, prefixes: Seq[String] = Seq()): Name[A] =
+  def fresh[A <: Type](localName: String, prefixes: Seq[String] = Seq()): Name[A] =
     Name[A](
       localName,
       prefixes,
-      nonce = Random.alphanumeric.take(4).mkString
+      Random.alphanumeric.take(4).mkString
     )
 
   implicit val counterStyleIsCssValue: CssValue[Name[CounterStyle]] =

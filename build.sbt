@@ -48,7 +48,7 @@ lazy val example = project
   .settings(
     workbenchSettings,
     bootSnippet :=
-      "window.app = jspha.alder.example.AlderExample();window.app.main();",
+      "window.app = jspha.alder.example.todomvc.TodoMVC();window.app.main();",
     updateBrowsers <<= updateBrowsers.triggeredBy(fastOptJS in Compile)
   )
   .settings(

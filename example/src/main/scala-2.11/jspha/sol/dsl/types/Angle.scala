@@ -11,16 +11,16 @@ sealed trait Angle {
 
 object Angle {
 
-  case class Deg(a: Double) extends AnyVal with Angle {
+  case class Deg(a: Double) extends Angle {
     def radians = Rad(a/360 * 2 * Math.PI)
   }
-  case class Grad(a: Double) extends AnyVal with Angle {
+  case class Grad(a: Double) extends Angle {
     def radians = Rad(a/400 * 2 * Math.PI)
   }
-  case class Rad(a: Double) extends AnyVal with Angle {
+  case class Rad(a: Double) extends Angle {
     def radians = this
   }
-  case class Turn(a: Double) extends AnyVal with Angle {
+  case class Turn(a: Double) extends Angle {
     def radians = Rad(a * 2 * Math.PI)
   }
 

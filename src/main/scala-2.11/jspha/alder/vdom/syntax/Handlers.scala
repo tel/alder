@@ -10,6 +10,7 @@ class Handlers[El, Mod](syntax: Internal[El, Mod]) {
   def onKeyUp(cb: (KeyboardEvent) => Unit): Mod = makeCallbackMod("onKeyUp")(cb)
   def onCut(cb: (ClipboardEvent) => Unit): Mod = makeCallbackMod("onCut")(cb)
   def onCanPlayThrough(cb: (MediaEvent) => Unit): Mod = makeCallbackMod("onCanPlayThrough")(cb)
+  def onDoubleClick(cb: (MouseEvent) => Unit): Mod = makeCallbackMod("onDoubleClick")(cb)
   def onDragStart(cb: (MouseEvent) => Unit): Mod = makeCallbackMod("onDragStart")(cb)
   def onEmptied(cb: (MediaEvent) => Unit): Mod = makeCallbackMod("onEmptied")(cb)
   def onSubmit(cb: (FormEvent) => Unit): Mod = makeCallbackMod("onSubmit")(cb)

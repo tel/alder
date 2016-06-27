@@ -10,7 +10,7 @@ sealed trait MediaConstraint {
 sealed trait MediaQuery extends MediaConstraint {
   import MediaConstraint._
 
-  def & (other: MediaQuery): MediaQuery = And(this, other)
+//  def & (other: MediaQuery): MediaQuery = And(this, other)
 }
 
 object MediaConstraint {
@@ -134,6 +134,6 @@ object MediaConstraint {
 
   }
 
-  case class And(left: MediaQuery, right: MediaQuery) extends MediaQuery
+//  case class And(left: MediaQuery, right: MediaQuery) extends MediaQuery
 
 }

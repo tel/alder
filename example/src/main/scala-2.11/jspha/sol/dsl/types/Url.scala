@@ -8,7 +8,10 @@ case class Url(url: String)
 
 object Url {
 
-  val urlIsCssValue: CssValue[Url] = ???
+  implicit val urlIsCssValue: CssValue[Url] =
+    new CssValue[Url] {
+      def cssRepr(self: Url) = s"url(${self.url})"
+    }
 
   implicit def ofString(name: String): Url = apply(name)
 

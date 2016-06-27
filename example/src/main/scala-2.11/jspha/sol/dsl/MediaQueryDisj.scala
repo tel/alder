@@ -1,5 +1,6 @@
 package jspha.sol.dsl
 
+import scala.language.implicitConversions
 import jspha.sol.internal.{Builder, NonEmptyList}
 
 /**
@@ -39,25 +40,23 @@ sealed trait MediaQueryDisj {
 }
 
 object MediaQueryDisj {
-  implicit final case class Holds(mq: MediaQuery) extends MediaQueryDisj
+  final case class Holds(mq: MediaQuery) extends MediaQueryDisj
   final case class Fails(mq: MediaQuery) extends MediaQueryDisj
   final case class Disj(mqs: NonEmptyList[(MediaQuery, Boolean)]) extends MediaQueryDisj
 
+  implicit def liftMediaQuery(mq: MediaQuery): MediaQueryDisj = Holds(mq)
 
-  val isCssFragment: CssFragment[MediaQueryDisj] = new CssFragment[MediaQueryDisj] {
-    def write(self: MediaQueryDisj): Builder =
-      self match {
-        case Holds(mq) => CssFragment.write(mq)
-        case Fails(mq) => Builder.ofString("not ") ++ CssFragment.write(mq)
-        case Disj(nel) =>
-          Builder.ofSeq(
-            f = { case (mq, ok) =>
-              if (ok) write(Holds(mq))
-              else write(Fails(mq))
-            },
-            bs = nel.seq,
-            sep = " and "
-          )
-      }
-  }
+  implicit val isCssFragment: CssFragment[MediaQueryDisj] =
+    new CssFragment[MediaQueryDisj] {
+
+      private def buildPair(pair: (MediaQuery, Boolean)): Builder =
+        pair match { case (mq, ok) => write(if (ok) Holds(mq) else Fails(mq)) }
+
+      def write(self: MediaQueryDisj): Builder =
+        self match {
+          case Holds(mq) => CssFragment.write(mq)
+          case Fails(mq) => Builder.ofString("not ") ++ CssFragment.write(mq)
+          case Disj(nel) => Builder.ofSeq(buildPair, nel.seq, " and ")
+        }
+    }
 }
