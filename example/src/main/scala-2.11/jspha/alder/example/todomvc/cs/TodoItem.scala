@@ -38,7 +38,7 @@ object TodoItem extends Facet {
         input(
           className("toggle"),
           Attrs.`type`("checkbox"),
-          Attrs.checked("true").when(model.completed),
+          Attrs.checked(true).when(model.completed),
           Handlers.onClick(_ => submit(Toggle))
         ),
         label(model.text),

@@ -23,6 +23,12 @@ object DslCore extends Internal[Element, TagMod] {
   def makeCallbackMod[E](name: String)(cb: (E) => Unit): TagMod =
     TagMod(_.addProp(name, cb))
 
+  def makeBooleanValueMod(name: String)(value: Boolean) =
+    if (value)
+      TagMod(_.addProp(name, name))
+    else
+      TagMod.zero
+
   def makeJsValueMod(name: String)(value: js.Any): TagMod =
     TagMod(_.addProp(name, value))
 

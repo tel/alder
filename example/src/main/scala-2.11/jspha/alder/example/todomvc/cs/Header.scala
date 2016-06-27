@@ -13,7 +13,7 @@ object Header extends Static {
       input(
         className("new-todo"),
         Attrs.placeholder("What needs to be done?"),
-        Attrs.autoFocus("true")
+        Attrs.autoFocus(true)
       )
     )
 }

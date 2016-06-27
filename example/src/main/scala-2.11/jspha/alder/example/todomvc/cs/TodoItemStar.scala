@@ -44,7 +44,7 @@ object TodoItemStar extends Initialized {
         input(
           className("toggle"),
           Attrs.`type`("checkbox"),
-          Attrs.defaultChecked(model.completed.toString),
+          Attrs.defaultChecked(model.completed),
           Handlers.onClick { _ => submit(Toggle) }
         ),
         label(
