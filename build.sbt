@@ -19,8 +19,13 @@ licenses := Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.scala-js" %%% "scalajs-dom" % "0.9.0"
+  "org.scala-js" %%% "scalajs-dom" % "0.9.0",
+
+  "com.lihaoyi" %%% "utest" % "0.4.3" % "test"
 )
+
+testFrameworks +=
+  new TestFramework("utest.runner.Framework")
 
 scmInfo := Some(ScmInfo(
   url("https://github.com/tel/alder"),
