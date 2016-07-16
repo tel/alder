@@ -21,6 +21,9 @@ object SelectorAtom {
   case class Attribute(sel: SelectorAtom, op: AttrOp, insensitive: Boolean = false)
     extends SelectorAtom
 
+  case class WithPseudoClass(sel: SelectorAtom, pc: PseudoClass) extends SelectorAtom
+
+  case class WithPseudoElement(sel: SelectorAtom, pe: PseudoElement) extends SelectorAtom
 
   implicit object PrintSelectorAtom extends Print[SelectorAtom] {
 
@@ -35,6 +38,8 @@ object SelectorAtom {
       case Class(cls) => "." <> cls
       case Attribute(sel, op, insensitive) =>
         rec(sel) <> "[" <> rec(op) <> (if (insensitive) " i]" else rbracket)
+      case WithPseudoClass(sa, pc) => rec(sa) <> rec(pc)
+      case WithPseudoElement(sa, pe) => rec(sa) <> rec(pe)
     }
   }
 
