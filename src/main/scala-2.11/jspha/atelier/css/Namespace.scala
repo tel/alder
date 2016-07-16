@@ -1,7 +1,5 @@
 package jspha.atelier.css
 
-import jspha.atelier.internal.Document
-
 /**
   * A namespace for a HTML tag.
   */
@@ -15,8 +13,8 @@ object Namespace {
 
   implicit object PrintNamespace extends Print[Namespace] {
     def doc(a: Namespace) = a match {
-      case Any => Document.text("*")
-      case Named(s) => Document.text(s)
+      case Any => "*"
+      case Named(s) => s
     }
   }
 

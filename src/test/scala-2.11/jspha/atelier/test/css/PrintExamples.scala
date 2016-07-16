@@ -118,7 +118,7 @@ object PrintExamples extends TestSuite {
 
       'Media - {
         val mq = MediaQuery.OfMediaType(MediaType.All)
-        val media = Media(mq, CSS(Seq(selection)))
+        val media = Media(mq, Sheet(Seq(selection)))
 
 //        P.print(media) ==>
 //          "@media all { #foo { foo: bar; baz: quux } }"

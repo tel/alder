@@ -1,6 +1,6 @@
 package jspha.atelier.css
 
-import jspha.atelier.internal.Document
+import jspha.atelier.internal.Doc
 
 sealed trait MediaType
 
@@ -14,13 +14,13 @@ object MediaType {
 
   implicit object PrintMediaType extends Print[MediaType] {
 
-    import Document.text
+    import Doc._
 
     def doc(a: MediaType) = a match {
-      case All => text("all")
-      case Screen => text("screen")
-      case Print => text("print")
-      case Speech => text("speech")
+      case All => "all"
+      case Screen => "screen"
+      case Print => "print"
+      case Speech => "speech"
     }
   }
 

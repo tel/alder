@@ -11,8 +11,7 @@ object MediaQuery {
 
   implicit object PrintMediaQuery extends Print[MediaQuery] {
     def doc(a: MediaQuery) = a match {
-      case OfMediaType(mt) =>
-        Print[MediaType].doc(mt)
+      case OfMediaType(mt) => rec(mt)
     }
   }
 

@@ -1,6 +1,6 @@
 package jspha.atelier.css
 
-import jspha.atelier.internal.{DString, Document}
+import jspha.atelier.internal.Doc
 
 sealed trait Decl
 
@@ -8,7 +8,7 @@ object Decl {
 
   case class Selection(selector: Selector, style: Rules) extends Decl
 
-  case class Media(mediaQuery: MediaQuery, css: CSS) extends Decl
+  case class Media(mediaQuery: MediaQuery, css: Sheet) extends Decl
 
   case class FontFamily(rules: Rules) extends Decl
 
@@ -16,29 +16,24 @@ object Decl {
 
   implicit object PrintDecl extends Print[Decl] {
 
-    import Document._
+    import Doc._
 
     def doc(block: Decl) = block match {
       case Selection(selector, style) =>
-        Print[Selector].doc(selector) ++ "{" +/+ Print[Rules].doc(style) +/+ "}"
+        rec(selector) <+> braced(rec(style))
 
       case Media(mq, css) =>
-        text("@media") ++
-          Print[MediaQuery].doc(mq) ++
-          "{" +/+ Print[CSS].doc(css) +/+ "}"
+        "@media" <+> rec(mq) <+> braced(rec(css))
 
       case FontFamily(rules) =>
-        text("@font-family") ++ "{" +/+ Print[Rules].doc(rules) +/+ "}"
+        "@font-family" <+> braced(rec(rules))
 
       case Keyframes(iden, desc) =>
         val dstrings = desc.map {
-          case (pct, rules) =>
-            text(pct) ++ "{" +/+ Print[Rules].doc(rules) +/+ "}"
+          case (pct, rules) => pct <+> "{" <+> rec(rules) <+> "}"
         }(collection.breakOut)
 
-        text("@keyframes") ++
-          text(iden) ++
-          "{" +/+ lines(dstrings) +/+ "}"
+        "@keyframes" <+> iden <+> braced(lines(dstrings))
 
     }
   }

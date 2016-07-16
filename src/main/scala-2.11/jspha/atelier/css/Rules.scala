@@ -1,7 +1,7 @@
 package jspha.atelier.css
 
 import scala.collection.breakOut
-import jspha.atelier.internal.{DString, Document}
+import jspha.atelier.internal.Doc
 
 /**
   * Values of type `Rules` represent a set of style constraints applied to a
@@ -13,12 +13,15 @@ object Rules {
 
   implicit object PrintStyle extends Print[Rules] {
 
-    import Document._
+    import Doc._
 
-    def doc(a: Rules) =
-      Document.lines(a.rules.map { case (key, value) =>
-        nest(2, text(key) ++ ":" ++ text(value))
-      }(breakOut))
+    def doc(a: Rules) = {
+      val rules = a.rules.map {
+        case (key, value) => key <> ":" <+> value
+      }(breakOut)
+
+      lines(rules)
+    }
   }
 
 }

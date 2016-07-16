@@ -1,6 +1,6 @@
 package jspha.atelier.css
 
-import jspha.atelier.internal.Document
+import jspha.atelier.internal.Doc
 
 /**
   * A value of type `Selector` describes a CSS selector statement.
@@ -18,15 +18,15 @@ object Selector {
 
   implicit object PrintSelector extends Print[Selector] {
 
-    import Document._
+    import Doc._
 
     def doc(a: Selector) = a match {
       case Element(element, may) => may match {
-        case None => text(element)
-        case Some(ns) => Print[Namespace].doc(ns) ++ "|" ++ element
+        case None => element
+        case Some(ns) => rec(ns) <> "|" <> element
       }
-      case Id(id) => text("#") ++ text(id)
-      case Class(cls) => text(".") ++ text(cls)
+      case Id(id) => "#" <> id
+      case Class(cls) => "." <> cls
     }
   }
 
