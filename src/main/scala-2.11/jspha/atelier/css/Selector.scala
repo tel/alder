@@ -1,33 +1,43 @@
 package jspha.atelier.css
 
-import jspha.atelier.internal.Doc
+import scala.language.implicitConversions
 
-/**
-  * A value of type `Selector` describes a CSS selector statement.
-  */
-sealed trait Selector
+sealed trait Selector {
+
+  import Selector._
+
+  def +(other: Selector): Selector = Adjacent(this, other)
+  def ~(other: Selector): Selector = Sibling(this, other)
+  def >(other: Selector) = Child(this, other)
+  def >>(other: Selector) = Descendent(this, other)
+
+}
 
 object Selector {
 
-  case class Element(element: String, ns: Option[Namespace] = None)
-    extends Selector
+  implicit def atom(a: SelectorAtom): Selector = Atom(a)
 
-  case class Id(id: String) extends Selector
+  case class Atom(a: SelectorAtom) extends Selector
 
-  case class Class(cls: String) extends Selector
+  case class Adjacent(prev: Selector, y: Selector) extends Selector
+
+  case class Sibling(x: Selector, y: Selector) extends Selector
+
+  case class Child(x: Selector, y: Selector) extends Selector
+
+  case class Descendent(x: Selector, y: Selector) extends Selector
 
   implicit object PrintSelector extends Print[Selector] {
 
-    import Doc._
+    import jspha.atelier.internal.Doc._
 
     def doc(a: Selector) = a match {
-      case Element(element, may) => may match {
-        case None => element
-        case Some(ns) => rec(ns) <> "|" <> element
-      }
-      case Id(id) => "#" <> id
-      case Class(cls) => "." <> cls
+      case Atom(a) => rec(a)
+      case Adjacent(x, y) => rec(x) <> "+" <> rec(y)
+      case Sibling(x, y) => rec(x) <> "~" <> rec(y)
+      case Child(x, y) => rec(x) <> ">" <> rec(y)
+      case Descendent(x, y) => rec(x) <> " " <> rec(y)
     }
-  }
 
+  }
 }

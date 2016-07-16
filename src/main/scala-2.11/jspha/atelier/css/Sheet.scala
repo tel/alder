@@ -9,9 +9,11 @@ case class Sheet(blocks: Seq[Decl])
 
 object Sheet {
 
+  import Doc._
+
   implicit object PrintCSS extends Print[Sheet] {
     def doc(css: Sheet) =
-      Doc.lines(css.blocks.map(rec[Decl]))
+      wordSeq(css.blocks.map(rec[Decl]))
   }
 
 }

@@ -20,7 +20,7 @@ object Rules {
         case (key, value) => key <> ":" <+> value
       }(breakOut)
 
-      lines(rules)
+      intercalate("; ", rules)
     }
   }
 

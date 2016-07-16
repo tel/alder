@@ -1,5 +1,6 @@
 package jspha.atelier.internal
 
+import scala.annotation.tailrec
 import scala.language.implicitConversions
 
 /**
@@ -9,85 +10,82 @@ import scala.language.implicitConversions
   * building a binary tree with branches at each append. This can lead to
   * more alloations, but also allows string construction to be a single tree
   * traversal instead of multiple append steps.
+  *
+  * This completely sacrifices peformance, for instance, examining a
+  * character at a certain index in the string. If you need to both examine
+  * and construct a string then this is a poor data structure.
   */
 sealed trait Doc {
 
-  import Doc._
-
-  def apply(sb: StringBuilder): Unit
-
   def <>(other: Doc): Doc =
-    Cat(this, other)
+    Doc.Cat(this, other)
 
   def <+>(other: Doc): Doc =
-    CatSpace(this, other)
+    // try to keep the tree a little more balanced
+    (this <> Doc.space) <> other
 
   def build: String = {
     val sb = new StringBuilder
-    apply(sb)
+    Doc.build(this, sb)
     sb.mkString
   }
+
 }
 
 object Doc {
 
-  private case object Nil extends Doc {
-    def apply(sb: StringBuilder): Unit = ()
-  }
-
-  val nil: Doc = Nil
-
-  private case class Cat(x: Doc, y: Doc) extends Doc {
-    def apply(sb: StringBuilder): Unit = {
-      x(sb)
-      y(sb)
-    }
-  }
-
-  private case class CatSpace(x: Doc, y: Doc) extends Doc {
-    def apply(sb: StringBuilder): Unit = {
-      x(sb)
-      sb append " "
-      y(sb)
-    }
-  }
-
-  private case class OfString(s: String) extends Doc {
-    def apply(sb: StringBuilder): Unit =
-      sb append s
-  }
-
-  private case class Lines(docs: Seq[Doc]) extends Doc {
-    def apply(sb: StringBuilder): Unit = {
-      var first = true
-      for (d <- docs) {
-        if (!first) { sb append "\n" }
-        d(sb)
-        first = false
-      }
-    }
-  }
-
-  private case class Words(docs: Seq[Doc]) extends Doc {
-    def apply(sb: StringBuilder): Unit = {
-      var first = true
-      for (d <- docs) {
-        if (!first) { sb append " " }
-        d(sb)
-        first = false
-      }
-    }
-  }
+  val empty: Doc = Empty
+  val space: Doc = " "
+  val line: Doc = "\n"
+  val lbrace = string("{")
+  val rbrace = string("}")
+  var lparen = string("(")
+  var rparen = string(")")
+  var lbracket = string("[")
+  var rbracket = string("]")
 
   implicit def string(s: String): Doc =
     OfString(s)
 
-  def lines(ss: Seq[Doc]): Doc = Lines(ss)
-  def words(ss: Seq[Doc]): Doc = Words(ss)
+  def intercalate(sep: Doc, docs: Seq[Doc]): Doc =
+    Intercalate(sep, docs)
 
-  val lbrace = string("{")
-  val rbrace = string("}")
+  def lineSeq(ss: Seq[Doc]): Doc = intercalate(line, ss)
+  def wordSeq(ss: Seq[Doc]): Doc = intercalate(space, ss)
 
-  def braced(d: Doc): Doc = words(Seq(lbrace, d, rbrace))
+  def lines(ss: Doc*): Doc = lineSeq(ss)
+  def words(ss: Doc*): Doc = wordSeq(ss)
+
+  def surround(l: Doc, r: Doc)(d: Doc) = words(l, d, r)
+
+  def braced(d: Doc): Doc = surround(lbrace, rbrace)(d)
+  def parened(d: Doc): Doc = surround(lparen, rparen)(d)
+  def bracketed(d: Doc): Doc = surround(lbracket, rbracket)(d)
+
+  def build(doc: Doc, sb: StringBuilder): Unit = {
+    @tailrec def eat(docs: List[Doc]): Unit = {
+      docs match {
+        case Nil => ()
+        case Empty :: ds => eat(ds)
+        case Cat(x, y) :: ds => eat(x :: y :: ds)
+        case OfString(s) :: ds => sb append s; eat(ds)
+        case Intercalate(sep, subdocs) :: ds =>
+          var first = true
+          var stack = ds
+          for (d <- subdocs.reverseIterator) {
+            if (first) { first = false }
+            else { stack = sep :: stack }
+            stack = d :: stack
+          }
+          eat(stack)
+      }
+    }
+    eat(List(doc))
+  }
+
+  private case object Empty extends Doc
+  private case class Cat(x: Doc, y: Doc) extends Doc
+  private case class OfString(s: String) extends Doc
+  private case class Intercalate(sep: Doc, docs: Seq[Doc]) extends Doc
 
 }

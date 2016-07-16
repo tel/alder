@@ -6,7 +6,7 @@ sealed trait Decl
 
 object Decl {
 
-  case class Selection(selector: Selector, style: Rules) extends Decl
+  case class Selection(selectors: SelectorSet, style: Rules) extends Decl
 
   case class Media(mediaQuery: MediaQuery, css: Sheet) extends Decl
 
@@ -19,8 +19,8 @@ object Decl {
     import Doc._
 
     def doc(block: Decl) = block match {
-      case Selection(selector, style) =>
-        rec(selector) <+> braced(rec(style))
+      case Selection(selectors, style) =>
+        rec(selectors) <+> braced(rec(style))
 
       case Media(mq, css) =>
         "@media" <+> rec(mq) <+> braced(rec(css))
@@ -30,10 +30,10 @@ object Decl {
 
       case Keyframes(iden, desc) =>
         val dstrings = desc.map {
-          case (pct, rules) => pct <+> "{" <+> rec(rules) <+> "}"
+          case (pct, rules) => pct <+> braced(rec(rules))
         }(collection.breakOut)
 
-        "@keyframes" <+> iden <+> braced(lines(dstrings))
+        "@keyframes" <+> iden <+> braced(wordSeq(dstrings))
 
     }
   }
